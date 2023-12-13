@@ -119,7 +119,7 @@
                     </div>
 
                     <?php
-                    include("tam.php");
+                    include("content.php");
                     include("config/dbconfig.php");
                     $sql = "select * from  blog";
                     $kq = mysqli_query($kn, $sql);

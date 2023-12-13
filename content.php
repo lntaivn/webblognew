@@ -1,6 +1,14 @@
 <?php
 include("config/dbconfig.php");
-$sql = "SELECT * FROM blog";
+$sql = "SELECT b.title, b.summary, b.date,
+        GROUP_CONCAT(c.name) AS tags,
+        (SELECT COUNT(*) FROM Vote WHERE id_post = b.id_blog) AS reactions,
+        (SELECT COUNT(*) FROM Comment WHERE id_post = b.id_blog) AS comments
+        FROM Blog b
+        LEFT JOIN Blogs_to_Categories btc ON b.id_blog = btc.id_blog
+        LEFT JOIN Categories c ON btc.id_category = c.id_category
+        GROUP BY b.id_blog;
+";
 $kq = mysqli_query($kn, $sql);
 
 while ($row = mysqli_fetch_array($kq)) {
