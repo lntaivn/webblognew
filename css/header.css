@@ -1,0 +1,125 @@
+.header {
+    position: fixed;
+    height: 56px;
+    background-color: #fff;
+    padding: 0 120px;
+    z-index: 1; 
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.header-with-search {
+  /* background-color: blue; */
+  /* height: var(--header-with-search-height); */
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  justify-content: flex-start;
+  padding: 10px;
+  width: 1250px;
+  width: slamp(978px ,1250px,1250px);
+
+}
+.header__logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.header__logo-img--maxwithimg {
+  width: 45px;
+  height: auto;
+  display: flex;
+  
+}
+.header__search-input-wrap {
+  display: flex;
+  height: 35px;
+
+  margin: 0 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  width: 420px;
+}
+
+.header__seach-input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  padding: 0 16px;
+  
+}
+.btn-icon__search {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content:flex-end;
+  background-color: #fff;
+}
+.btn-icon__search:hover {
+  background-color:#8612ad;
+  border-radius: 1px;
+}
+.fa-solid{
+  border: none;
+  outline: none;
+  margin: 0 12px;
+}
+.header__Login-Screate {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: auto;
+}
+.header__login {
+  min-width: 100px;
+  height: 34px;
+  text-decoration: none;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0 12px;
+  outline: none;
+  cursor: pointer;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.6rem;
+  font-weight: 500;
+}
+.header__login:hover {
+  border-radius: 5px;
+  border: 0.05px;
+  background-color:rgba(0, 0, 0, 0.05);
+  text-decoration-color:#8612ad ;
+}
+.header__CreateAcc {
+  font-weight: 600;
+  min-width: 142px;
+  height: 34px;
+  text-decoration: none;
+  border:1px solid #8612ad ;
+  font-size: 1.5rem;
+  padding: 0 12px;
+  outline: none;
+  cursor: pointer;
+  color: #8612ad;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.6rem;
+  border-radius: 5px;
+}
+.header__CreateAcc:hover {
+  background-color: #8612ad;
+  color: var(--white-color);
+  text-decoration-color: var(--text-color);
+}
+

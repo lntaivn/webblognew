@@ -1,0 +1,78 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    margin-right: 10px;
+}
+
+.date {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.card-body h2 {
+    padding: 10px;
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.tags {
+    padding: 0 10px 10px;
+}
+
+.tags span {
+    background-color: #e1ecf4;
+    color: #0366d6;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+}
+
+.card-footer button {
+    font-size: 0.8em;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.card-footer button:hover {
+    text-decoration: underline;
+}
+
+.save-button img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Responsive design might be required for different screen sizes */
+@media (max-width: 700px) {
+    .card {
+        width: 90%;
+        height: auto;
+    }
+}
