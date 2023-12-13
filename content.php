@@ -22,7 +22,7 @@ while ($row = mysqli_fetch_array($kq)) {
     @$readTime = $row["read_time"];
 
     // Generating the HTML content
-    echo '<div class="card" style="width: 653px; height: 192px;">';
+    echo '<div class="card" style="width: 90%; height: 192px;">';
     echo '    <div class="card-header">';
     echo '        <img src="profile-picture-url.jpg" alt="Profile" class="profile-img">';
     echo '        <span class="date">' . htmlspecialchars($date) . '</span>';

@@ -66,10 +66,6 @@
             </div>
         </header>
 
-
-
-
-
         <div class="main-flex">
             <div class="body-flexFist__ row row1">
                 <div class="body-flexFist__login">

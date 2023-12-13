@@ -9,7 +9,7 @@
   
    .row2 {
     flex: 0 0 655px; 
-   
+    
    }
   .row3 {
     flex: 0 0 330px; 
@@ -23,8 +23,8 @@
     flex-shrink: 0;
   } */
   .row2 {
-    max-width: 700px;
-    min-width: 500px;
+    max-width: 1000px;
+    min-width: 800px;
     flex: 1;
     flex-shrink: 1;
   }
