@@ -66,10 +66,6 @@
             </div>
         </header>
 
-
-
-
-
         <div class="main-flex">
             <div class="body-flexFist__ row row1">
                 <div class="body-flexFist__login">
@@ -119,7 +115,7 @@
                     </div>
 
                     <?php
-                    include("tam.php");
+                    include("content.php");
                     include("config/dbconfig.php");
                     $sql = "select * from  blog";
                     $kq = mysqli_query($kn, $sql);
