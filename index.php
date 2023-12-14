@@ -20,7 +20,7 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="./css/responsive__bodyFlex.css" />
-    <link rel="stylesheet" href="styles.css"/>
+    <link rel="stylesheet" href="styles.css" />
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
 </head>
 
@@ -115,73 +115,28 @@
 
                     </div>
 
-                    <?php
-                    include("content/card.php");
-                    ?>
-                    
-                    <md-block>
-                    # So sánh giữa HTMLCollection và NodeList
+                   
 
-## 1. Khái Niệm
-
-### HTMLCollection
-- **Định nghĩa:** HTMLCollection là một đối tượng trong JavaScript, đại diện cho một tập hợp (collection) các phần tử HTML.
-- **Sử dụng chủ yếu:** Khi làm việc với kết quả trả về từ các phương thức DOM như `getElementsByClassName`, `getElementsByTagName`.
-
-### NodeList
-- **Định nghĩa:** NodeList là một đối tượng trong JavaScript, đại diện cho một tập hợp (collection) các nút trong DOM (Document Object Model).
-- **Sử dụng chủ yếu:** Khi sử dụng các phương thức DOM như `querySelectorAll`, `childNodes`.
-
-## 2. Sự Giống Nhau
-
-- Cả HTMLCollection và NodeList đều là tập hợp các Nodes (elements) lấy ra từ Document thông qua các phương thức get element trong DOM.
-- Cả hai đều hỗ trợ truy cập các Nodes thông qua chỉ số index.
-- Cả hai đều có thuộc tính `length` để trả về số phần tử của tập hợp.
-
-## 3. Sự Khác Nhau
-
-### Định nghĩa
-
-- HTMLCollection là một tập hợp các document elements.
-- NodeList là một tập hợp các document nodes (element nodes, attribute nodes, và text nodes).
-
-### Cách Truy Cập Các Item Con
-
-- HTMLCollection cho phép truy cập các item bằng tên, id, và chỉ số index.
-- NodeList chỉ cho phép truy cập các item bằng chỉ số index.
-
-### LIVE hay STATIC Collection
-
-- **Live Collection (HTMLCollection):** Tự động cập nhật khi có sự thay đổi trong DOM, ví dụ khi thêm hoặc xóa phần tử thỏa mãn điều kiện tìm kiếm.
-- **NodeList:** Có thể là "live" hoặc "static". Phương thức như `querySelectorAll` trả về NodeList "live", tự động cập nhật khi có thay đổi trong DOM. Ngược lại, một số phương thức khác như `childNodes` trả về NodeList "static", không cập nhật khi có thay đổi trong DOM.
-
-### Theo Cách Tạo Ra
-
-- Phương thức `getElementsByClassName()` và `getElementsByTagName()` trả về 1 live HTMLCollection.
-- Phương thức `querySelectorAll()` trả về 1 static NodeList.
-- Thuộc tính `childNodes` trả về 1 live NodeList.
-
-## Kết Luận
-
-HTMLCollection và NodeList đều là các tập hợp trong DOM, có nhiều điểm giống nhau nhưng cũng có những đặc điểm khác nhau quan trọng, đặc biệt là về tính chất "live" hay "static" của chúng khi có sự thay đổi trong DOM. Việc lựa chọn giữa chúng phụ thuộc vào yêu cầu cụ thể của dự án và cách chúng được tạo ra.
-</md-block>
-                    <!-- <div class="body-flexSecond__Post-by-user-content">
+                    <!-- <md-block> -->
+                        <!-- <div class="body-flexSecond__Post-by-user-content">
 
                     </div> -->
 
-                    <div class="body-flexSecond__TOP-Post">
-                        <div class="body-flexSecond__Top-name-tags">
-                            <a href="#" class="body-flexSecond__Top-name-tags-one">#javascript</a>
-                            <a href="#" class="body-flexSecond__Top-name-tags-two">#aws</a>
-                            <a href="#" class="body-flexSecond__Top-name-tags-three">#serverless</a>
-                            <a href="#" class="body-flexSecond__Top-name-tags-four">#tutorial</a>
+                        <div class="body-flexSecond__TOP-Post">
+                            <div class="body-flexSecond__Top-name-tags">
+                                <a href="#" class="body-flexSecond__Top-name-tags-one">#javascript</a>
+                                <a href="#" class="body-flexSecond__Top-name-tags-two">#aws</a>
+                                <a href="#" class="body-flexSecond__Top-name-tags-three">#serverless</a>
+                                <a href="#" class="body-flexSecond__Top-name-tags-four">#tutorial</a>
+                            </div>
                         </div>
-                    </div>
 
                 </div>
 
 
-
+                <?php
+                    include("content/card.php");
+                    ?>
 
             </div>
 

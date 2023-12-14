@@ -1,26 +1,23 @@
 .main-flex {
-    position: absolute;
     display: flex;
-    height: auto;
-    justify-content:center;
+    justify-content: center;
     background-color: #f5f5f5;
     padding: 15px 150px;
     margin: 50px auto 0;
     flex-direction: row;
-    /* align-items: center; */
     width: 100%;
+    align-items: flex-start;
 }
-
-/*                         body 1                    */
-
 
 .body-flexFist__ {
     background-color: yellow;
-    width: 240px; 
+    width: 240px;
     min-height: 210px;
     max-width: 350px;
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
+    align-items: flex-start;
+
 }
 .body-flexFist__login {
     display: flex;
@@ -29,6 +26,8 @@
     height: 320px;
     align-items: center;
     border-radius: 5px;
+    /* position: sticky;
+    top: 0; */
 }
 .body-flexFist__login-button {
     display: flex;
@@ -107,6 +106,7 @@
     display: flex;
     flex-direction: column;
     margin: 0 20px;
+    
 }
 .body-flexSecond__header-time {
     display: flex;
@@ -156,7 +156,9 @@
 .body-flexSecond__Post {
     background-color: var(--white-color);
     display: flex;
-    height:  600px;
+    height:  1000px;
+    
+    min-height: 1000px;
     width: 100%;
     flex-direction: column;
     align-items: center;
