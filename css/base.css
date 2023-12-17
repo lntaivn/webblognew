@@ -21,6 +21,9 @@ html {
 }
 .app {
     width: 100%;
+    
+    
+    z-index: 100;
 }
 .grid {
     width: 100%;

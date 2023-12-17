@@ -33,7 +33,7 @@
     flex: 1;
     flex-shrink: 1;
   }
-  .main-flex { background-color: blueviolet;}
+  .main-flex { background-color: blueviolet;height: auto;}
 }
 @media only screen  and (max-width : 1225px) and (min-width : 1060px){
   .row1 {
@@ -50,7 +50,7 @@
     flex: 2;
     flex-shrink: 1;
   }
-  .main-flex { background-color:brown;}
+  .main-flex { background-color:brown;height: auto;}
 }
   @media only screen  and (max-width: 1060px){
     .main-flex{ 
@@ -104,7 +104,8 @@
     }
     .main-flex{ 
       background-color: yellow;
-       width: 100%; 
+       width: 100%;
+       height: auto; 
        align-items: center;
         padding: 3.75px;
         margin: 0 auto;

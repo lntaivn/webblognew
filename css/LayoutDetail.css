@@ -1,0 +1,47 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4; 
+}
+
+.page-wrapper {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: auto;
+  position: relative;
+}
+
+.interaction-panel {
+  width: 60px; 
+  background-color: #eee;
+
+}
+
+.content-area {
+  flex-grow: 1; 
+
+}
+
+.user-profile {
+  width: 250px; 
+  background-color: #eee;
+
+}
+
+
+@media (max-width: 1024px) {
+  .user-profile {
+    display: none; 
+  }
+  .content-area {
+    flex: 1; 
+  }
+}
+
+@media (max-width: 768px) {
+  .page-wrapper .interaction-panel {
+    display: none !important; /* Increased specificity and !important to ensure it takes precedence */
+  }
+}
