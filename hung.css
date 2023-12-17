@@ -1,0 +1,34 @@
+.page-wrapper {
+    display: flex;
+    max-width: 1200px; /* You can set max width for the container */
+    margin: auto;
+  }
+  
+  .interaction-panel {
+    /* Styles for the interaction panel */
+    width: 60px; /* Example width */
+    background-color: #eee; /* Example background color */
+    padding: 20px;
+  }
+  
+  .content-area {
+    flex-grow: 1;
+    margin: 20px;
+    /* Additional styles */
+  }
+  
+  .content-header {
+    /* Styles for the content header */
+  }
+  
+  .content-main {
+    /* Styles for the main content section */
+  }
+  
+  .user-profile {
+    /* Styles for the user profile section */
+    width: 250px; /* Example width */
+    background-color: #eee; /* Example background color */
+    padding: 20px;
+    margin-left: 20px;
+  }
