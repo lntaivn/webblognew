@@ -1,7 +1,41 @@
+<?php
+include("../config/dbconfig.php");
+require './../vendor/autoload.php';
+
+function layXepHangTrungBinh($id_bai_viet)
+{
+    global $kn;
+    $sql = "SELECT AVG(count_vote) as average_ranking FROM vote WHERE id_post = ?";
+    $stmt = $kn->prepare($sql);
+    $stmt->bind_param("i", $id_bai_viet);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        return round($row['average_ranking'], 1);
+    }
+    return 0;
+}
+
+function hienThiXepHang($id_bai_viet)
+{
+    global $kn;
+    $xep_hang_tb = layXepHangTrungBinh($id_bai_viet);
+    for ($i = 0; $i < 5; $i++) {
+        if ($i < $xep_hang_tb) {
+            echo '<i class="fa fa-star" style="color: gold;"></i>';
+        } else {
+            echo '<i class="fa fa-star" style="color: grey;"></i>';
+        }
+    }
+}
+
+$id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <!-- Đây là phần head của tài liệu HTML -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Display</title>
@@ -11,25 +45,39 @@
     <link rel="stylesheet" href="./../css/ContentArea.css">
     <link rel="stylesheet" href="./../css/interaction-panel.css">
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
-
 </head>
 
 <body>
     <div class="page-wrapper">
-
         <nav class="interaction-panel">
-            <!-- Dynamic social icon data could be inserted here -->
+            <!-- Đây là phần navigation panel với các biểu tượng xã hội và xếp hạng -->
+            <ul class="social-icons">
+                <li>
+                    <i class="fa fa-star" style="color: gold;"></i>
+                    <div>
+                        <?php
+                        if ($id_bai_viet) {
+                            echo layXepHangTrungBinh($id_bai_viet);
+                        }
+                        ?>
+                    </div>
+                </li>
+                <li><i class="fa fa-comment"></i>
+                    <div>19</div>
+                </li>
+                <li>
+                    <div>...</div>
+                </li>
+            </ul>
         </nav>
-
         <div class="content-area">
             <header class="content-header">
-                <!-- Additional header content -->
+                <!-- Đây là phần header của khu vực nội dung -->
             </header>
             <div class="content-body">
+                <!-- Đây là phần nơi nội dung bài viết sẽ được hiển thị -->
+                <!-- Khi truy vấn và hiển thị bài viết, bạn có thể gọi hàm showBlog($id_bai_viet) ở đây -->
                 <?php
-                include("../config/dbconfig.php");
-                require './../vendor/autoload.php';
-
                 function showBlog($id)
                 {
                     global $kn;
@@ -50,6 +98,9 @@
                         // Display the blog content dynamically
                         echo '<img src="./../img/hinhanhdemo2.png" alt="Banner Image" class="wizard-image">';
                         echo '<div class="article-info">';
+                        echo '<div class="blog-ranking">';
+                        hienThiXepHang($row['id_blog']);
+                        echo '</div>';
                         echo '<div class="author-info">';
                         echo '<img src="./../img/logo.png" alt="' . htmlspecialchars($row['author_name']) . '" class="author-image">';
                         echo '<div class="author-details">';
@@ -67,15 +118,17 @@
                     }
                 }
 
-                if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-                    showBlog($_GET['id']);
-                } else {
-                    echo 'Invalid blog ID.';
+                if ($id_bai_viet) {
+                    showBlog($id_bai_viet);
                 }
                 ?>
             </div>
+            <div>
+                
+            </div>
         </div>
 
+        <!-- thong tin nguoi dung -->
         <?php
         include("../config/dbconfig.php");
         // Giả sử bạn muốn hiển thị thông tin người dùng có id_user là 1
@@ -94,8 +147,7 @@
             ?>
             <aside class="user-profile">
                 <!-- <img src="./img/<?php //echo htmlspecialchars($row['profile_picture']); ?>" alt="Profile Picture" -->
-                <img src="./../img/logo.png" alt="Profile Picture"
-                    class="profile-picture">
+                <img src="./../img/logo.png" alt="Profile Picture" class="profile-picture">
                 <h2 class="user-name">
                     <?php echo htmlspecialchars($row['name']); ?>
                 </h2>
