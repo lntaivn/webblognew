@@ -45,6 +45,23 @@ $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : nul
     <link rel="stylesheet" href="./../css/ContentArea.css">
     <link rel="stylesheet" href="./../css/interaction-panel.css">
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+
+    <style>
+        .star-rating {
+            display: none;
+            color: gray;
+            cursor: pointer;
+        }
+
+        .star-rating .star:hover,
+        .star-rating .star:hover~.star {
+            color: gold;
+        }
+
+        li:hover .star-rating {
+            display: flex;
+        }
+    </style>
 </head>
 
 <body>
@@ -53,14 +70,24 @@ $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : nul
             <!-- Đây là phần navigation panel với các biểu tượng xã hội và xếp hạng -->
             <ul class="social-icons">
                 <li>
-                    <i class="fa fa-star" style="color: gold;"></i>
+                    <!-- <i class="fa fa-star" style="color: gold;"></i>
                     <div>
                         <?php
-                        if ($id_bai_viet) {
-                            echo layXepHangTrungBinh($id_bai_viet);
-                        }
+                        // if ($id_bai_viet) {
+                        //     echo layXepHangTrungBinh($id_bai_viet);
+                        // }
                         ?>
+                        
+                    </div> -->
+                    
+                    <div class="star-rating">
+                        <span class="star" data-value="1">&#9733;</span>
+                        <span class="star" data-value="2">&#9733;</span>
+                        <span class="star" data-value="3">&#9733;</span>
+                        <span class="star" data-value="4">&#9733;</span>
+                        <span class="star" data-value="5">&#9733;</span>
                     </div>
+                    <i class="fa fa-star" style="color: gold;"></i>
                 </li>
                 <li><i class="fa fa-comment"></i>
                     <div>19</div>
@@ -124,7 +151,7 @@ $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : nul
                 ?>
             </div>
             <div>
-                
+
             </div>
         </div>
 
@@ -175,5 +202,33 @@ $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : nul
 
     </div>
 </body>
+<script>
+    window.onload = function() {
+        // Bắt sự kiện khi rê chuột vào ngôi sao
+        document.querySelectorAll('.star-rating .star').forEach(item => {
+            item.addEventListener('mouseover', function() {
+                this.style.color = 'gold';
+                let rating = this.getAttribute('data-value');
+                // Thay đổi màu của tất cả các ngôi sao trước ngôi sao hiện tại
+                for (let i = 0; i < rating; i++) {
+                    document.querySelectorAll('.star-rating .star')[i].style.color = 'gold';
+                }
+            });
+
+            item.addEventListener('mouseout', function() {
+                let stars = document.querySelectorAll('.star-rating .star');
+                stars.forEach(star => {
+                    star.style.color = 'gray';
+                });
+            });
+
+            item.addEventListener('click', function() {
+                console.log("dc");
+                alert("Bạn đã chọn " + this.getAttribute('data-value') + " sao.");
+                // Thêm mã xử lý lưu xếp hạng vào cơ sở dữ liệu ở đây
+            });
+        });
+    };
+</script>
 
 </html>

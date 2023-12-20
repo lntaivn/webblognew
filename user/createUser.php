@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Lấy dữ liệu từ biểu mẫu
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = $_POST['password']; // Mật khẩu cần được mã hóa bằng password_hash() trước khi lưu
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $gender = $_POST['gender'];
 
     // Kiểm tra xem tệp ảnh đã được tải lên thành công
