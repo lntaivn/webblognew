@@ -57,6 +57,9 @@
                 </div>
 
                 <div class="header__Login-Screate">
+                    <a href="CreateBlog.php" class="header__login">
+                        <p>Create Blog</p>
+                    </a>
                     <a href="#" class="header__login">
                         <p>Login</p>
                     </a>
