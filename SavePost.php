@@ -14,12 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Chèn dữ liệu vào bảng 'blog'
 
-
-
-
-
-
-    
     $query = "INSERT INTO blog (id_user, title, summary, content, banner) VALUES ('$Temp_Id_User', '$title', '$TEMP_summary', '$content', '$linkBanner')";
 
     if (mysqli_query($kn, $query)) {

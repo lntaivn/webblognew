@@ -1,345 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown Text Editor Toolbar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Base styles */
-* {
-  box-sizing: border-box;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css.css">
 
-/* Container for the editor */
-.editor-container {
-  display: flex;
-  justify-content: center; /* Separates the editor and the guide */
-    width: 100%;
-  align-items: center;
-  flex-direction: column;
-}
-
-/* Styles for the post creation area */
-.post-creation {
-  display: flex;
-  flex-direction: column;
-  width: 806px; /* Adjust width as needed */
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
-  margin-right: 20px; /* Space between the editor and the guide */
-}
-
-/* Button to add cover image */
-.image-upload {
-  background-color: #f9f9f9;
-  border: 2px dashed #d3d3d3;
-  color: #333;
-  padding: 10px 15px;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Text input for post title */
-.post-title {
-  font-size: 24px;
-  border: none;
-  margin-bottom: 20px;
-}
-
-/* Input for tags */
-.tags-input {
-  border: 2px solid #d3d3d3;
-  padding: 8px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-}
-
-/* Styles for the editor toolbar */
-.editor-toolbar {
-  display: flex;
-  justify-content: space-between; /* Distribute space between toolbar items */
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.editor-toolbar button {
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 8px;
-  margin-right: 5px;
-}
-
-.editor-toolbar button:hover {
-  background-color: #e0e0e0;
-}
-.author-form__tooltip {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: #e0e0e0;
-}
-/* Styles for the writing guide section */
-.writing-guide {
-  width: 300px; /* Adjust width as needed */
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-.toolbar {
-    display: flex;
-    
-}
-.author-form__tooltip {
-    display: flex;
-    flex-direction: column;
-    min-height: 604px;
-    width: 806px;
-}
-.authur_form__header {
-    width: 806px;
-    display: flex;
-    flex-direction: column;
-
-}
-/* 672 */
-.toolbar button {
-    background: none;
-    border: none;
-    padding: 8px;
-    margin-right: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.toolbar button:hover {
-    background-color: #e0e0e0;
-}
-
-.textarea {
-    width: 760px;
-    min-width: 760px;
-    height: 400px;
-    min-height: 400px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-family: monospace;
-    font-size: 13pt;
-    line-height: 1.15;
-    resize: none;
-}
-
-.textarea:focus,.textarea__header:focus {
-    outline: none;
-    border: 1px solid #ccc;
-}
-
-.tooltip {
-    position: relative;
-    display: inline-block;
-    font-size: 13pt;
-    line-height: 1.15;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 150%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
-    </style>
 </head>
-
 <body>
-    <div class="editor-container">
-        <div class="post-creation">
-            <img src="" id="preview" style="max-width: 300px; max-height: 300px; margin-top: 20px;">
-            <input type="file" id="hung" name="hung" style="display: none;" onchange="displayImage()">
-            <span id="fileName"></span>
-            <div>
-                <button type="button" onclick="triggerFileInput()">Add a cover image</button>
-                <button type="button" onclick="cancelImage()">Cancel</button>
-            </div>
-            
-            
-        
-            
-           
-          <input type="text" class="post-title" placeholder="New post title here...">
-          <input type="text" class="tags-input" placeholder="Add up to 4 tags...">
+<div class="profile__main">
+    <div class="hung" style="background-color: black;">
 
-        </div>    
-          <div class="editor-toolbar">
-            
-          </div>
-          <div class="author-form__tooltip">
-            <div class="toolbar">
-                <div class="tooltip">
-                    <button onclick="insertMarkdown('**', '**')"><b>B</b></button>
-                    <span class="tooltiptext">Bold (CTRL+B)</span>
+    </div>
+    <div class="profile">
+        <header class="profile__header">
+            <button class="profile__edit-button">Edit profile</button>
+            <img src="path-to-profile-picture.jpg" alt="Profile" class="profile__picture">
+            <h1 class="profile__name">HungBaDao</h1>
+            <p class="profile__bio">404 bio not found</p>
+            <p class="profile__joined">Joined on Dec 14, 2023</p>
+        </header>
+        <div class="profile__body">
+            <div class="profile__stats">
+                <div class="stats__item">
+                <i class="fas fa-newspaper stats__icon"></i> 1 post published
                 </div>
-                <div class="tooltip">
-                    <button onclick="insertMarkdown('_', '_')"><i>I</i></button>
-                    <span class="tooltiptext">Italic (CTRL+I)</span>
+                <div class="stats__item">
+                <i class="fas fa-comments stats__icon"></i> 0 comments written
                 </div>
-                <div class="tooltip">
-                    <button><i class="fa-solid fa-list-ol"></i></button>
-                    <span class="tooltiptext">Ordered list</span>
-                </div>
-                <div class="tooltip">
-                    <button><i class="fa-solid fa-list"></i></button>
-                    <span class="tooltiptext">Unordered list</span>
-                </div>
-                <div class="tooltip">
-                    <form method="post" enctype="multipart/form-data">
-                        <div>
-                         
-                        </div>
-                        <input type="file" name="fileToUpload" id="fileToUpload">
-                    </form>
+                <div class="stats__item">
+                <i class="fas fa-tags stats__icon"></i> 0 tags followed
                 </div>
             </div>
-
-            <textarea id="article_body_markdown" class="textarea"
-                placeholder="Write your post content here..."></textarea>
-
+            
+            <div class="post-preview">
+                <img src="path-to-avatar.jpg" alt="Avatar" class="post-preview__avatar">
+                <div class="post-preview__header">
+                <div>
+                    <div class="post-preview__meta">
+                        <h2 class="post-preview__author">HungBaDao</h2>
+                        <time class="post-preview__date">Dec 14</time>
+                      </div>
+                    </div>
+    
+                    <h3 class="post-preview__title">hung</h3>
+                    <div class="post-preview__footer">
+                      <button class="post-preview__comment-btn"><i class="fa-regular fa-comment"></i>Add Comment</button>
+                      <span class="post-preview__read-time">1 min read</span>
+                    </div>
+                  </div>
+                </div>
+                
+              
         </div>
-          <button type="submit">Save</button>
-        </div>
 
-    <script>
-        function insertMarkdown(before, after) {
-            const textarea = document.getElementById('article_body_markdown');
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const text = textarea.value;
-            const beforeText = text.substring(0, start);
-            const afterText = text.substring(end);
-            const selectedText = text.substring(start, end);
-
-            textarea.value = beforeText + before + selectedText + after + afterText;
-            textarea.focus();
-            textarea.setSelectionRange(start + before.length, end + before.length);
-        }
-        function insertList(type) {
-            const textarea = document.getElementById('article_body_markdown');
-            const cursorPosition = textarea.selectionStart;
-            const textBefore = textarea.value.substring(0, cursorPosition);
-            const textAfter = textarea.value.substring(cursorPosition);
-            let listSyntax;
-
-            if (type === 'ol') {
-                listSyntax = '1. ';
-            } else if (type === 'ul') {
-                listSyntax = '- ';
-            }
-
-            // Add a new line before the list syntax if the cursor is not at the start of the textarea
-            if (cursorPosition !== 0 && textBefore[textBefore.length - 1] !== '\n') {
-                listSyntax = '\n' + listSyntax;
-            }
-
-            textarea.value = textBefore + listSyntax + '\n' + textAfter;
-            // Move the cursor to the end of the inserted list syntax
-            const newPosition = cursorPosition + listSyntax.length;
-            textarea.setSelectionRange(newPosition, newPosition);
-            textarea.focus();
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const textarea = document.getElementById('article_body_markdown');
-            textarea.addEventListener('input', autoExpandTextarea);
-            textarea.addEventListener('focus', setCursorAtEnd); // or setCursorAtStart
-
-            // Attach the list insertion functions to the buttons
-            const orderedListButton = document.querySelector('.fa-list-ol');
-            const unorderedListButton = document.querySelector('.fa-list');
-            if (orderedListButton) {
-                orderedListButton.addEventListener('click', () => insertList('ol'));
-            }
-            if (unorderedListButton) {
-                unorderedListButton.addEventListener('click', () => insertList('ul'));
-            }
-
-            // Initial call to set the correct height of the textarea
-            autoExpandTextarea({ target: textarea });
-        });
-
-        function setCursorAtEnd(event) {
-            const el = event.target;
-            const textLength = el.value.length;
-            el.selectionStart = textLength;
-            el.selectionEnd = textLength;
-        }
-
-        function autoExpandTextarea(event) {
-            event.target.style.height = 'auto';
-            event.target.style.height = event.target.scrollHeight + 'px';
-        }
-    </script>
-    <script>
-        function triggerFileInput() {
-            document.getElementById('hung').click();
-        }
-
-        function displayImage() {
-            var input = document.getElementById('hung');
-            var fileNameDisplay = document.getElementById('fileName');
-            var preview = document.getElementById('preview');
-
-            // Kiểm tra xem người dùng đã chọn file chưa
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    // Hiển thị hình ảnh trên thẻ img
-                    preview.src = e.target.result;
-                };
-
-                // Đọc file hình ảnh
-                reader.readAsDataURL(input.files[0]);
-
-                // Hiển thị tên file (hoặc bạn có thể ẩn hoàn toàn)
-                fileNameDisplay.textContent = input.files[0].name;
-            }
-        }
-
-        function cancelImage() {
-            // Đặt giá trị của trường input file về rỗng
-            document.getElementById('hung').value = '';
-
-            // Xóa hình ảnh và tên file
-            document.getElementById('preview').src = '';
-            document.getElementById('fileName').textContent = '';
-        }
-    </script>
+    </div>
+</div>
 </body>
-
 </html>
