@@ -6,7 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!is_dir($target_dir)) {
             mkdir($target_dir, 0755, true);
         }
-
         $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
         $hashedFilename = uniqid('img_', true) . '.' . $imageFileType;
         $target_file = $target_dir . $hashedFilename;
@@ -25,31 +24,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     /////////////////////////////////////////////////
-    elseif  (isset($_FILES["hung"])) {
+    elseif (isset($_FILES["hung"])) {
       $target_dir = "upload_Banner/";
       if (!is_dir($target_dir)) {
           mkdir($target_dir, 0755, true);
       }
-
+  
       $imageFileType = strtolower(pathinfo($_FILES["hung"]["name"], PATHINFO_EXTENSION));
-      $target_file = $target_dir . uniqid('img_', true) . '.' . $imageFileType;
-
+      $hashedFilename = uniqid('img_', true) . '.' . $imageFileType;
+      $target_file = $target_dir . $hashedFilename;
+  
       if (move_uploaded_file($_FILES["hung"]["tmp_name"], $target_file)) {
-          echo "File uploaded successfully.";
+          echo $hashedFilename; // Trả về tên file đã được hash
+          exit();
       } else {
-          echo "Error uploading file.";
+          exit();
       }
   }
 }
 ?>
-
-
-
-
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -289,7 +282,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     function triggerFileInput() {
     document.getElementById('hung').click();
 }
-
+var uploadedFileName;
+//biến cục bộ xử lý xóa
 function displayImage() {
     var input = document.getElementById('hung');
     var preview = document.getElementById('preview');
@@ -314,7 +308,8 @@ function displayImage() {
         })
         .then(response => response.text())
         .then(data => {
-            console.log('Upload successful');
+            console.log(data);
+            uploadedFileName = data; // Cập nhật biến toàn cục
         })
         .catch(error => {
             console.error('Error:', error);
@@ -326,12 +321,12 @@ function cancelImage() {
     var preview = document.getElementById('preview');
     var input = document.getElementById('hung');
     var fileNameDisplay = document.getElementById('fileName');
-    var uploadedFileName = fileNameDisplay.textContent; // Giả sử tên file được lưu ở đây
-
+     
+    //console.log(uploadedFileName);
     preview.src = '';
     input.value = '';
     fileNameDisplay.textContent = '';
-
+    if(uploadedFileName){
     // Gửi yêu cầu xóa file
     fetch('deleteFile.php', {
         method: 'POST',
@@ -343,13 +338,16 @@ function cancelImage() {
     .then(response => response.text())
     .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
+  }
 }
 
 
     function savePost() {
     var formData = new FormData();
-
-    // Lấy giá trị từ form
+    if(uploadedFileName) {
+    const temp = 'upload_Banner/'+uploadedFileName;
+    formData.append('banner',temp);
+    }
     formData.append('title', document.querySelector('.post-title').value);
     formData.append('content', document.getElementById('article_body_markdown').value);
 

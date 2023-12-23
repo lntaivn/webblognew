@@ -3,12 +3,31 @@
 include 'config/dbconfig.php'; // Include your database connection file
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Lấy dữ liệu từ form
+    // Lấy dữ liệu từ form  
+    $linkBanner = isset($_POST['banner']) ? $_POST['banner'] : '';
     $title = isset($_POST['title']) ? $_POST['title'] : '';
     $content = isset($_POST['content']) ? $_POST['content'] : '';
     $tags = isset($_POST['tags']) ? $_POST['tags'] : [];
-
+    $Temp_Id_User =  1;
     // Biến lưu danh sách các id_category
+    $TEMP_summary = "HUNGTRAN"; // Tóm tắt tạm thời
+
+    // Chèn dữ liệu vào bảng 'blog'
+
+
+
+
+
+
+    
+    $query = "INSERT INTO blog (id_user, title, summary, content, banner) VALUES ('$Temp_Id_User', '$title', '$TEMP_summary', '$content', '$linkBanner')";
+
+    if (mysqli_query($kn, $query)) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $query . "<br>" . mysqli_error($kn);
+    }
+
     $categoryIds = [];
 
     // Duyệt qua từng tag
