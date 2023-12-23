@@ -66,7 +66,7 @@ $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : nul
 </head>
 
 <body>
-    <div class="page-wrapper-main">
+
         <div class="page-wrapper">
             <nav class="interaction-panel">
                 <!-- Đây là phần navigation panel với các biểu tượng xã hội và xếp hạng -->
@@ -151,9 +151,12 @@ $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : nul
                         showBlog($id_bai_viet);
                     }
                     ?>
-                </div>
-                <div>
 
+                </div>
+                <div class= "center-comment">
+                    <?php
+                        include('../comment/comment.php');
+                    ?>
                 </div>
             </div>
 
@@ -204,21 +207,9 @@ $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : nul
 
         </div>
 
-        <div class="page-wrapper-comment">
-            <div class="left-comment"></div>
-            <div class="center-comment">
-                <?php
-                include('../comment/comment.php');
-                ?>
-            </div>
-            <div class="right-comment">
-
-            </div>
 
 
-        </div>
-
-    </div>
+    
 
 
 </body>

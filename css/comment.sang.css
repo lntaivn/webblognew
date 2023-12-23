@@ -19,20 +19,12 @@ img {
 
 .page-wrapper-comment{
   display: flex;
-  flex-direction: row;
-  
-  
+  width: 100%;
+  flex-direction: column;
 }
-.left-comment{
-  width: 60px;
-}
-.center-comment{
-  gap: 0 100px;
-  flex: 1;
-}
-.right-comment{
-  width:250px;
-}
+
+
+
 /* Main container styles */
 .comments-container {
   max-width: 400px;
