@@ -1,0 +1,164 @@
+.post__creation {
+    display: flex;
+    flex-direction: column;
+    width: 828px; /* Adjust width as needed */
+
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 5px; /* Slightly rounded corners */
+    background-color: #fff; /* White background */
+  }
+  
+  .image-upload {
+    width: 200px;
+    background-color: #f2f2f2; /* Light grey background */
+    border: 1px solid #ddd; /* Slightly darker grey border */
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px; /* Space between button and textarea */
+  }
+  
+  .post-title {
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 16px; /* Larger font size for visibility */
+    border-radius: 5px;
+    margin-bottom: 15px; /* Space between textarea and tags input */
+    resize: none; /* Disable resizing of the textarea */
+  }
+  
+  .tags-input {
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  /* Placeholder styles */
+  ::placeholder {
+    color: #888; /* Light grey color */
+  }
+  
+  /* Focus styles */
+  .image-upload:focus,
+  .post-title:focus,
+  .tags-input:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: #aaa; /* Darker border on focus */
+  }
+  .toolbar {
+    display: flex;
+    justify-content: start;
+    background-color: #f3f3f3;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+
+    textarea {
+        width: 100%;
+    }
+}
+
+.author-form__tooltip {
+    display: flex;
+    flex-direction: column;
+    min-height: 604px;
+    width: 806px;
+}
+.authur_form__header {
+    width: 806px;
+    display: flex;
+    flex-direction: column;
+
+}
+/* 672 */
+.toolbar button {
+    background: none;
+    border: none;
+    padding: 8px;
+    margin-right: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.toolbar button:hover {
+    background-color: #e0e0e0;
+}
+
+.textarea {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 13pt;
+    line-height: 1.15;
+    resize: none;
+}
+
+.textarea:focus,.textarea__header:focus {
+    outline: none;
+    border: 1px solid #ccc;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    font-size: 13pt;
+    line-height: 1.15;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.main__author {
+    padding-top: 50px;
+    display: flex;
+    width: 100%;
+    min-height: 600px;
+    justify-content: center;
+    align-items: center;
+}
+
+#article_body_markdown {
+    min-height: 400px;
+    height: 400px;
+}
+
+.upload-icon {
+    cursor: pointer; /* Change cursor to pointer when over the icon */
+}
+.main__author {
+    display: flex;
+    flex-direction: column;
+    .article_header {
+        width: 100%;
+        height: 200px;
+        min-height: 200px;
+    }
+    
+    align-items: center;
+}
+.textarea__header {
+    width: 100%;
+}

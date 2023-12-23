@@ -1,48 +1,23 @@
 <?php
-$uploadOk = 1;
-$imageURL = '';
-$imageMarkdown = '';
-
-// Check if the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["fileToUpload"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $target_dir = "uploads/";
-    if (!file_exists($target_dir)) {
+    if (!is_dir($target_dir)) {
         mkdir($target_dir, 0755, true);
     }
 
     $imageFileType = strtolower(pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION));
-    $hashedName = uniqid('img_', true) . '.' . $imageFileType;
-    $target_file = $target_dir . $hashedName;
+    $hashedFilename = uniqid('img_', true) . '.' . $imageFileType;
+    $target_file = $target_dir . $hashedFilename;
 
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if ($check !== false) {
-        $uploadOk = 1;
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+        // Successfully uploaded
+        echo $hashedFilename; 
     } else {
-        $uploadOk = 0;
+        // Upload failed
+        http_response_code(500);
+        echo "Sorry, there was an error uploading your file.";
     }
-
-    if ($_FILES["fileToUpload"]["size"] > 5000000) {
-        $uploadOk = 0;
-    }
-
-    if (!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
-        $uploadOk = 0;
-    }
-
-    if ($uploadOk == 1) {
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            // Set the URL to the uploaded image
-            $imageURL = 'http://localhost/webblognew/' . $target_file;
-            // Create Markdown image text
-            $imageMarkdown = "![Image description]($imageURL)";
-        }
-    }
-}
-
-// If the form was submitted and the image was uploaded successfully,
-// $imageMarkdown will contain the Markdown text to be inserted into the textarea.
-if ($imageMarkdown) {
-    echo "<script>parent.setImageMarkdown(`$imageMarkdown`);</script>";
+    exit(); // Stop the script after handling upload
 }
 ?>
 
@@ -54,112 +29,8 @@ if ($imageMarkdown) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown Text Editor Toolbar</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <style>
-        body {
-            line-height: 1.15;
-            font-size: 18pt;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
+    <link rel="stylesheet" href="./css/createPost.css">
 
-        .toolbar {
-            display: flex;
-            justify-content: start;
-            background-color: #f3f3f3;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-            width: 100%;
-
-            textarea {
-                width: 100%;
-            }
-        }
-
-        .author-form__tooltip {
-            display: flex;
-            flex-direction: column;
-            min-height: 604px;
-            width: 806px;
-        }
-
-        /* 672 */
-        .toolbar button {
-            background: none;
-            border: none;
-            padding: 8px;
-            margin-right: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .toolbar button:hover {
-            background-color: #e0e0e0;
-        }
-
-        .textarea {
-            width: 100%;
-            height: 400px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            font-family: monospace;
-            font-size: 13pt;
-            line-height: 1.15;
-            resize: none;
-        }
-
-        .textarea:focus {
-            outline: none;
-            border: 1px solid #ccc;
-        }
-
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            font-size: 13pt;
-            line-height: 1.15;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            position: absolute;
-            z-index: 1;
-            bottom: 150%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .main__author {
-            padding-top: 50px;
-            display: flex;
-            width: 100%;
-            min-height: 600px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #article_body_markdown {
-            min-height: 400px;
-            height: 400px;
-        }
- 
-        .upload-icon {
-            cursor: pointer; /* Change cursor to pointer when over the icon */
-        }
-    </style>
 </head>
 
 <body>
@@ -173,6 +44,11 @@ if ($imageMarkdown) {
     </form>  -->
 
     <div class="main__author">
+        <div class="post-creation">
+        <button class="image-upload">Add a cover image</button>
+        <textarea class="post-title" placeholder="New post title here..."></textarea>
+        <input type="text" class="tags-input" placeholder="Add up to 4 tags..." />
+        </div>
         <div class="author-form__tooltip">
             <div class="toolbar">
                 <div class="tooltip">
@@ -205,7 +81,6 @@ if ($imageMarkdown) {
                 placeholder="Write your post content here..."></textarea>
 
         </div>
-
     </div>
     <script>
         function insertMarkdown(before, after) {
@@ -276,35 +151,27 @@ if ($imageMarkdown) {
             event.target.style.height = 'auto';
             event.target.style.height = event.target.scrollHeight + 'px';
         }
+    </script>
+ <script>
+document.getElementById('fileToUpload').addEventListener('change', function() {
+    var formData = new FormData();
+    formData.append('fileToUpload', this.files[0]);
 
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-    // ... Your existing JavaScript ...
-
-    // Listen for the file input change
-    document.getElementById('fileToUpload').addEventListener('change', function() {
-        if (this.files && this.files[0]) {
-            // Assuming you want to insert a placeholder text for the image
-            var markdownTextarea = document.getElementById('article_body_markdown');
-            var fileName = this.files[0].name; // Get the file name
-            // Insert some placeholder text into the textarea
-            markdownTextarea.value += '\nUploading image ' + fileName + '...\n';
-            
-            // Alternatively, if you want to display an image preview:
-            // Create a FileReader object
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                // Create an image markdown with the preview
-                markdownTextarea.value += '\n![Image preview](' + e.target.result + ')\n';
-            };
-            // Read the image file as a data URL.
-            reader.readAsDataURL(this.files[0]);
-        }
+    fetch('CreateBlog.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(hashedFilename => {
+        var markdownTextarea = document.getElementById('article_body_markdown');
+        var imageURL = 'http://localhost/webblognew/uploads/' + hashedFilename.trim();
+        markdownTextarea.value += `\n![image.png](${imageURL})\n`;
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
 });
-        
-    </script>
+</script>
 </body>
 
 </html>
