@@ -118,10 +118,7 @@
                     </div>
 
 
-                    <?php
-                    include("content/card.php");
-                    ?>
-                    
+                            
                  
                    
                     <!-- <div class="body-flexSecond__Post-by-user-content">
