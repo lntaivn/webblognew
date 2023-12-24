@@ -51,7 +51,7 @@
                     </a>
                     <?php 
                     if(isset($_SESSION["user"])){
-                        echo("<a href='login.php' class='header__login'>
+                        echo("<a href='logout.php' class='header__login'>
                                 <p>Logout</p>
                             </a>");
                     }
@@ -59,7 +59,7 @@
                         echo("<a href='login.php' class='header__login'>
                                 <p>Login</p>
                             </a>
-                            <a href='#' class='header__CreateAcc'>
+                            <a href='register.php' class='header__CreateAcc'>
                                 <p>Create Account</p>
                             </a>");
                     }
