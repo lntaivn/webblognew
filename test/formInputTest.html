@@ -12,20 +12,13 @@
   box-sizing: border-box;
 }
 
-body, html {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4; /* Adjust the background color as needed */
-}
-
 /* Container for the editor */
 .editor-container {
   display: flex;
   justify-content: center; /* Separates the editor and the guide */
-  padding: 20px;
+    width: 100%;
   align-items: center;
+  flex-direction: column;
 }
 
 /* Styles for the post creation area */
@@ -91,6 +84,10 @@ body, html {
 .author-form__tooltip {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #e0e0e0;
 }
 /* Styles for the writing guide section */
 .writing-guide {
@@ -183,10 +180,22 @@ body, html {
 <body>
     <div class="editor-container">
         <div class="post-creation">
-            <input type="file" placeholder="Add a cover image">
-      
+            <img src="" id="preview" style="max-width: 300px; max-height: 300px; margin-top: 20px;">
+            <input type="file" id="hung" name="hung" style="display: none;" onchange="displayImage()">
+            <span id="fileName"></span>
+            <div>
+                <button type="button" onclick="triggerFileInput()">Add a cover image</button>
+                <button type="button" onclick="cancelImage()">Cancel</button>
+            </div>
+            
+            
+        
+            
+           
           <input type="text" class="post-title" placeholder="New post title here...">
           <input type="text" class="tags-input" placeholder="Add up to 4 tags...">
+
+        </div>    
           <div class="editor-toolbar">
             
           </div>
@@ -293,6 +302,42 @@ body, html {
         function autoExpandTextarea(event) {
             event.target.style.height = 'auto';
             event.target.style.height = event.target.scrollHeight + 'px';
+        }
+    </script>
+    <script>
+        function triggerFileInput() {
+            document.getElementById('hung').click();
+        }
+
+        function displayImage() {
+            var input = document.getElementById('hung');
+            var fileNameDisplay = document.getElementById('fileName');
+            var preview = document.getElementById('preview');
+
+            // Kiểm tra xem người dùng đã chọn file chưa
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Hiển thị hình ảnh trên thẻ img
+                    preview.src = e.target.result;
+                };
+
+                // Đọc file hình ảnh
+                reader.readAsDataURL(input.files[0]);
+
+                // Hiển thị tên file (hoặc bạn có thể ẩn hoàn toàn)
+                fileNameDisplay.textContent = input.files[0].name;
+            }
+        }
+
+        function cancelImage() {
+            // Đặt giá trị của trường input file về rỗng
+            document.getElementById('hung').value = '';
+
+            // Xóa hình ảnh và tên file
+            document.getElementById('preview').src = '';
+            document.getElementById('fileName').textContent = '';
         }
     </script>
 </body>
