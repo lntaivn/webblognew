@@ -1,3 +1,7 @@
+<?php
+ session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,21 +39,6 @@
                     </div>
                     <div class="header__search-input-wrap">
                         <input type="text" class="header__seach-input" placeholder="Search..." />
-                        <!-- <div class="header__search-history">
-            
-                            
-                            <h3 class="header__search-history-heading">Lich Su Tim Kiem</h3>
-                            <ul class="header__search-history-list">
-            
-                                <li class="header__search-history-item">
-                                    <a href="">Kem duong da</a>
-                                </li>
-                                <li class="header__search-history-item">
-                                    <a href="">Kem duong da</a>
-                                </li>
-                                
-                            </ul>
-                        </div> -->
                         <button type="submit" class="btn-icon__search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -60,12 +49,22 @@
                     <a href="CreateBlog.php" class="header__login">
                         <p>Create Blog</p>
                     </a>
-                    <a href="#" class="header__login">
-                        <p>Login</p>
-                    </a>
-                    <a href="#" class="header__CreateAcc">
-                        <p>Create Account</p>
-                    </a>
+                    <?php 
+                    if(isset($_SESSION["user"])){
+                        echo("<a href='login.php' class='header__login'>
+                                <p>Logout</p>
+                            </a>");
+                    }
+                    else{
+                        echo("<a href='login.php' class='header__login'>
+                                <p>Login</p>
+                            </a>
+                            <a href='#' class='header__CreateAcc'>
+                                <p>Create Account</p>
+                            </a>");
+                    }
+                    ?>
+                    
                 </div>
             </div>
         </header>
