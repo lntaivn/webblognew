@@ -1,60 +1,64 @@
-
 <?php
-include 'config/dbconfig.php'; // Include your database connection file
+include 'config/dbconfig.php';
+session_start();
+
+
+$email = $_SESSION['user'];
+$userQuery = "SELECT id_user FROM user WHERE email = ?";
+$userStmt = mysqli_prepare($kn, $userQuery) ;
+    mysqli_stmt_bind_param($userStmt, "s", $email);
+    mysqli_stmt_execute($userStmt);
+    $userResult = mysqli_stmt_get_result($userStmt);
+    $userRow = mysqli_fetch_assoc($userResult);
+    mysqli_stmt_close($userStmt);
+
+    $id_user = $userRow['id_user'];
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Lấy dữ liệu từ form  
-    $linkBanner = isset($_POST['banner']) ? $_POST['banner'] : '';
-    $title = isset($_POST['title']) ? $_POST['title'] : '';
-    $content = isset($_POST['content']) ? $_POST['content'] : '';
-    $tags = isset($_POST['tags']) ? $_POST['tags'] : [];
-    $Temp_Id_User =  1;
-    // Biến lưu danh sách các id_category
-    $TEMP_summary = "HUNGTRAN"; // Tóm tắt tạm thời
+    $linkBanner = $_POST['banner'] ?? '';
+    $title = $_POST['title'] ?? '';
+    $content = $_POST['content'] ?? '';
+    $tags = $_POST['tags'] ?? [];
+    $id_user = $userRow['id_user'];
+    $TEMP_summary = ""; // Tóm tắt tạm thời
 
     // Chèn dữ liệu vào bảng 'blog'
+    $query = "INSERT INTO blog (id_user, title, summary, content, banner) VALUES (?, ?, ?, ?, ?)";
+    if ($stmt = mysqli_prepare($kn, $query)) {
+        mysqli_stmt_bind_param($stmt, "issss", $id_user, $title, $TEMP_summary, $content, $linkBanner);
+        mysqli_stmt_execute($stmt);
+        $id_blog = mysqli_insert_id($kn); // Lấy ID của bài viết vừa được chèn
+        mysqli_stmt_close($stmt);
 
+        // Duyệt qua từng tag và chèn vào blogs_to_categories
+        foreach ($tags as $tag) {
+            $tag = mysqli_real_escape_string($kn, $tag);
+            $query = "SELECT id_category FROM categories WHERE name = ?";
+            if ($tagStmt = mysqli_prepare($kn, $query)) {
+                mysqli_stmt_bind_param($tagStmt, "s", $tag);
+                mysqli_stmt_execute($tagStmt);
+                $result = mysqli_stmt_get_result($tagStmt);
 
-
-
-
-
-    
-    $query = "INSERT INTO blog (id_user, title, summary, content, banner) VALUES ('$Temp_Id_User', '$title', '$TEMP_summary', '$content', '$linkBanner')";
-
-    if (mysqli_query($kn, $query)) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $query . "<br>" . mysqli_error($kn);
-    }
-
-    $categoryIds = [];
-
-    // Duyệt qua từng tag
-    foreach ($tags as $tag) {
-        // Thực hiện truy vấn để tìm id_category dựa trên tag
-        $tag = mysqli_real_escape_string($kn, $tag); // Use the $kn variable from your dbconfig.php
-        $query = "SELECT id_category FROM categories WHERE name = '$tag'";
-        $result = mysqli_query($kn, $query);
-
-        // Kiểm tra kết quả truy vấn
-        if ($result) {
-            $row = mysqli_fetch_assoc($result);
-            if ($row) {
-                // Lấy id_category từ kết quả truy vấn và thêm vào mảng
-                $categoryIds[] = $row['id_category'];
+                if ($row = mysqli_fetch_assoc($result)) {
+                    $id_category = $row['id_category'];
+                    $insertQuery = "INSERT INTO blogs_to_categories (id_blog, id_category) VALUES (?, ?)";
+                    if ($insertStmt = mysqli_prepare($kn, $insertQuery)) {
+                        mysqli_stmt_bind_param($insertStmt, "ii", $id_blog, $id_category);
+                        mysqli_stmt_execute($insertStmt);
+                        mysqli_stmt_close($insertStmt);
+                    }
+                }
+                mysqli_stmt_close($tagStmt);
             }
         }
-    }
 
-    // Trả về phản hồi
-    echo "Title: " . $title . "<br>";
-    echo "Content: " . $content . "<br>";
-
-    if (!empty($categoryIds)) {
-        echo "Category IDs: " . implode(', ', $categoryIds);
+        echo "New record and category associations created successfully";
     } else {
-        echo "No category IDs found for the specified tags.";
+        echo "Error: " . mysqli_error($kn);
     }
+
+    mysqli_close($kn);
 }
+
 ?>

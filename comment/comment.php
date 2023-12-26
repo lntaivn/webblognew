@@ -1,3 +1,5 @@
+
+
 <div class="center-comment" id="comment">
     <div class="add-comment">
         <input type="text" placeholder="Add to the discussion">
@@ -12,10 +14,10 @@
   
   // Truy vấn comment
   $sql = "SELECT b.title, u.name AS user_name, c.comment_text, c.comment_date
-FROM blog AS b
-LEFT JOIN comment AS c ON b.id_blog = c.id_post
-LEFT JOIN user AS u ON c.id_user = u.id_user
-WHERE b.id_blog = $id_bai_viet";
+          FROM blog AS b
+          LEFT JOIN comment AS c ON b.id_blog = c.id_post
+          LEFT JOIN user AS u ON c.id_user = u.id_user
+          WHERE b.id_blog = $id_bai_viet";
 
   $result = $kn->query($sql);
 

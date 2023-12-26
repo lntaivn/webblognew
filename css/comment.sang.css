@@ -76,17 +76,17 @@ img {
   height: 50px; 
 }
 
-.add-comment button {
+/* .add-comment button {
   display: none;
   transition: 0.3s;
-}
-
+} */
+/* 
 .add-comment input:focus ~ button {
   display: inline-block;
 }
 .add-comment button:first-child {
   margin-right: 10px;
-}
+} */
 
 .add-comment-summit {
   background: #4CAF50;

@@ -1,7 +1,13 @@
 <?php
 include("config/dbconfig.php");
-
 session_start();
+
+if (!isset($_SESSION["user"])) {
+  echo "<script language=javascript>
+alert('Vui lòng đăng nhập!');
+window.location='login.php';
+</script>";
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user'])) {
     // Lấy email từ session

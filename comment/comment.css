@@ -36,7 +36,7 @@ img {
     margin: 0;
   }
   
-  .subscribe-button {
+  /* .subscribe-button {
     background: #4CAF50;
     color: #fff;
     border: none;
@@ -46,32 +46,32 @@ img {
   }
   .add-comment {
     padding: 10px;
-  }
+  } */
   /* Input field styles */
-  .add-comment input[type="text"] {
+  /* .add-comment input[type="text"] {
     width: 95%;
     height: 30px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin: 10px 0;
-  }
-
+  } */
+/* 
   .add-comment input[type="text"]:focus {
     height: 50px; 
-  }
+  } */
 
   .add-comment button {
     display: none;
     transition: 0.3s;
   }
 
-  .add-comment input:focus ~ button {
+  /* .add-comment input:focus ~ button {
     display: inline-block;
   }
   .add-comment button:first-child {
     margin-right: 10px;
-  }
+  } */
 
   .add-comment-summit {
     background: #4CAF50;
