@@ -104,15 +104,7 @@ if (isset($_SESSION["user"])) {
                         <i class="fas fa-tags stats__icon"></i> 0 tags followed
                     </div>
                 </div>
-
-
-
-
-
-
-
-
-
+                
          <!-- #region-->
                 <div class="post-preview-grid">
                     <?php if (isset($_SESSION["user"])) {

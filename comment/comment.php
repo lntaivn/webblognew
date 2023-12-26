@@ -1,3 +1,7 @@
+
+
+
+
 <div class="center-comment" id="comment">
       <div class="add-comment">
             <form action="../comment/savecomment.php" method="POST" onsubmit="return submitComment()">
@@ -36,7 +40,7 @@
       while ($row = $result->fetch_assoc()) {
             echo '<div class="comment">';
             echo '  <div class="comment-avatar">';
-            echo '    <img src="../' . $row['avt'] . '" alt="Not Found" />';
+            echo '<img src="' . $row['avt'] . '" alt="Not Found" />';
             echo '  </div>';
             echo '  <div class="comment-content">';
             echo '    <div class="comment-author">' . $row['user_name'] . '</div>';

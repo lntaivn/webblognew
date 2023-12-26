@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 ?>
-
+$id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -177,14 +177,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
     }
 
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('tag')) {
-        // Lấy ID của tag
-        var tagId = event.target.id;
-        // Gọi hàm removeTag
-        removeTag(tagId);
-    }
-});
 
     function removeTag(tagValue) {
       var tag = document.getElementById('tag-' + tagValue);

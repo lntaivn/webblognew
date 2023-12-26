@@ -1,8 +1,25 @@
 <?php
+session_start();
+?>
+<?php
 include("../config/dbconfig.php");
 require './../vendor/autoload.php';
 
 $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
+$query = "SELECT u.id_user, u.email FROM blog b JOIN user u ON b.id_user = u.id_user WHERE b.id_blog = ?";
+            $stmt = $kn->prepare($query);
+            $stmt->bind_param("i", $id_bai_viet);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            if ($row = $result->fetch_assoc()) {
+            $id_user = $row['id_user'];
+            $email = $row['email'];
+            } else {
+            echo "Không tìm thấy bài viết với ID: " . $id_bai_viet;
+            }
+
+$stmt->close();
 
 $sql = "SELECT 
     (SELECT round(AVG(count_vote),0) FROM vote WHERE id_post = $id_bai_viet) AS average_ranking,
@@ -77,6 +94,18 @@ $comment = $row["number_of_comments"];
             max-width: 950px !important;
             max-height: 339px;
       }
+      .edit_bloger {
+            max-width: 950px;
+            width: 950px;
+            display: flex;
+            justify-content: end;
+          
+            a {margin-right: 20px; margin-top: 20px;}
+      }
+      .tags_list{
+            display: flex;
+            gap: 5px;
+      }
       </style>
 </head>
 
@@ -122,16 +151,35 @@ $comment = $row["number_of_comments"];
                         <!-- Đây là phần nơi nội dung bài viết sẽ được hiển thị -->
                         <!-- Khi truy vấn và hiển thị bài viết, bạn có thể gọi hàm showBlog($id_bai_viet) ở đây -->
                         <?php
-                function showBlog($id)
+            function getBlogTags($id_blog)
+                 {
+                   global $kn;
+                 
+                   $query = "SELECT c.name FROM categories c 
+                             JOIN blogs_to_categories btc ON c.id_category = btc.id_category 
+                             WHERE btc.id_blog = ?";
+                   $stmt = mysqli_prepare($kn, $query);
+                   mysqli_stmt_bind_param($stmt, "i", $id_blog);
+                   mysqli_stmt_execute($stmt);
+                   $result = mysqli_stmt_get_result($stmt);
+                 
+                   $tags = [];
+                   while ($row = mysqli_fetch_assoc($result)) {
+                     $tags[] = $row['name'];
+                   }
+                 
+                   return $tags;
+                 }       
+                function showBlog($id,$email)
                 {
                     global $kn;
-
+                    
                     $sql = "SELECT blog.*, user.name AS author_name, user.id_user, blog.banner FROM blog JOIN user ON blog.id_user = user.id_user WHERE id_blog = ?";
+                    
                     $stmt = mysqli_prepare($kn, $sql);
                     mysqli_stmt_bind_param($stmt, "i", $id);
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
-
 
                     if ($row = mysqli_fetch_assoc($result)) {
                         // Tạo một đối tượng Parsedown mới
@@ -141,6 +189,10 @@ $comment = $row["number_of_comments"];
                         $htmlContent = $parsedown->text($row['content']);
                         // Display the blog content dynamically
                         echo '<img src="../' . $row["banner"] . '" alt="Banner Image" class="wizard-image">';
+                        if (isset($_SESSION["user"]) && $_SESSION["user"] == $email) {
+                              // Hiển thị nút chỉnh sửa
+                              echo '<div class="edit_bloger"><a href="../edit_blog.php?id=' . $id . '" class="edit-button">Edit</a></div>';
+                        }
                         echo '<div class="article-info">';
                         echo '<div class="blog-ranking">';
                         echo '</div>';
@@ -154,7 +206,13 @@ $comment = $row["number_of_comments"];
                         echo '<p class="article-summary">' . htmlspecialchars($row['summary']) . '</p>';
                         echo '<div class="article-content">' . $htmlContent . '</div>';
                         echo '<div class="tags">';
-                        // Tags or other elements could be added here
+                        $tags = getBlogTags($id);
+                        echo '<div class="tags_list">';
+                        foreach ($tags as $tag) {
+                              $tagId = str_replace(' ', '-', $tag); 
+                              echo '<span class="tag" id="tag-' . htmlspecialchars($tagId) . '">' . htmlspecialchars($tag) . '</span>';
+                        }
+                        echo '</div>';
                         echo '</div></div>';
                     } else {
                         echo 'Blog post not found.';
@@ -162,7 +220,7 @@ $comment = $row["number_of_comments"];
                 }
 
                 if ($id_bai_viet) {
-                    showBlog($id_bai_viet);
+                    showBlog($id_bai_viet,$email);
                 }
                 ?>
 
@@ -177,10 +235,7 @@ $comment = $row["number_of_comments"];
             <!-- thong tin nguoi dung -->
             <?php
         include("../config/dbconfig.php");
-        // Giả sử bạn muốn hiển thị thông tin người dùng có id_user là 1
-        $id_user = 1;
 
-        // Truy vấn cơ sở dữ liệu để lấy thông tin người dùng
         $sql = "SELECT * FROM user WHERE id_user = ?";
         $stmt = $kn->prepare($sql);
         $stmt->bind_param("i", $id_user);
@@ -188,12 +243,12 @@ $comment = $row["number_of_comments"];
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            // Lấy thông tin người dùng và hiển thị
+
             $row = $result->fetch_assoc();
             ?>
             <aside class="user-profile">
                   <!-- <img src="./img/<?php //echo htmlspecialchars($row['profile_picture']); ?>" alt="Profile Picture" -->
-                  <img src="./../img/logo.png" alt="Profile Picture" class="profile-picture">
+                  <img src="<?php echo htmlspecialchars($row['avt']); ?>" alt="Profile Picture" class="profile-picture">
                   <h2 class="user-name">
                         <?php echo htmlspecialchars($row['name']); ?>
                   </h2>
@@ -201,15 +256,15 @@ $comment = $row["number_of_comments"];
                   <p class="user-bio">
                         <?php //echo htmlspecialchars($row['bio']); ?>
                   </p>
-                  <!-- Thông tin về công việc và ngày tham gia có thể không có sẵn trong cơ sở dữ liệu bạn cung cấp -->
+                 
                   <div class="user-info">
                         <strong>WORK</strong>
                         <p>Head of Growth @ Novu</p>
-                        <!-- Đây là giả định, thay thế bằng dữ liệu thực từ cơ sở dữ liệu -->
+ 
                   </div>
                   <div class="user-info">
                         <strong>JOINED</strong>
-                        <p>Feb 23, 2022</p> <!-- Đây là giả định, thay thế bằng dữ liệu thực từ cơ sở dữ liệu -->
+                        <p>Feb 23, 2022</p>
                   </div>
             </aside>
             <?php

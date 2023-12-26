@@ -41,6 +41,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 ?>
+<?php
+include("./config/dbconfig.php");
+$id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
+function findBlogById($id_bai_viet)
+{
+  global $kn; // Giả sử $kn là biến kết nối cơ sở dữ liệu
+
+  $query = "SELECT * FROM blog WHERE id_blog = ?";
+  $stmt = mysqli_prepare($kn, $query);
+  mysqli_stmt_bind_param($stmt, "i", $id_bai_viet);
+  mysqli_stmt_execute($stmt);
+  $result = mysqli_stmt_get_result($stmt);
+
+  if ($row = mysqli_fetch_assoc($result)) {
+    // Bài viết được tìm thấy, xử lý $row để hiển thị thông tin bài viết
+    return $row;
+  } else {
+    // Không tìm thấy bài viết
+    return null;
+  }
+}
+function getBlogTags($id_blog)
+{
+  global $kn;
+
+  $query = "SELECT c.name FROM categories c 
+            JOIN blogs_to_categories btc ON c.id_category = btc.id_category 
+            WHERE btc.id_blog = ?";
+  $stmt = mysqli_prepare($kn, $query);
+  mysqli_stmt_bind_param($stmt, "i", $id_blog);
+  mysqli_stmt_execute($stmt);
+  $result = mysqli_stmt_get_result($stmt);
+
+  $tags = [];
+  while ($row = mysqli_fetch_assoc($result)) {
+    $tags[] = $row['name'];
+  }
+
+  return $tags;
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +93,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Markdown Text Editor Toolbar</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="./css/createPost.css">
+  <style>
+    html{
+    scroll-behavior: smooth;
+}
 
+::-webkit-scrollbar{
+width: 8px;
+height: 8px;
+}
+
+::-webkit-scrollbar-thumb{
+background-color: rgb(202, 202, 202);
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+background-color: rgb(168, 168, 168);
+}
+
+::-webkit-scrollbar-track{
+background-color: transparent;
+}
+  </style>
 </head>
 
 <body>
@@ -66,23 +130,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <div class="main__author">
     <div>
-      <h2>Create Blog Post</h2>
+      <h2>Edit Blog Post</h2>
     </div>
     <div class="post-creation">
+
       <div class="post__display">
-        <img src="" id="preview" style="max-width: 300px; max-height: 300px; margin-top: 20px;">
-        <input type="file" id="hung" name="hung" style="display: none;" onchange="displayImage()">
-        <span id="fileName"></span>
+        <?php
+        include("./config/dbconfig.php");
+        $blog = findBlogById($id_bai_viet);
+        $banner = $blog['banner'];
+      
+        if ($blog) {
 
-        <div class="post__display-add-img">
-          <button type="button" onclick="triggerFileInput()">Add Image</button>
-          <button type="button" onclick="cancelImage()">Cancel</button>
-        </div>
+          ?>
+          <img src="<?php echo $blog['banner']; ?>" id="preview"
+            style="max-width: 300px; max-height: 300px; margin-top: 20px;">
+          <input type="file" id="hung" name="hung" style="display: none;" onchange="displayImage()">
+          <span id="fileName"></span>
 
-        <div class="post__display-textare">
-          <input type="text" class="post-title" placeholder="New post title here...">
+          <div class="post__display-add-img">
+            <button type="button" onclick="triggerFileInput()">Add Image</button>
+            <button type="button" onclick="cancelImage()">Cancel</button>
+          </div>
 
-        </div>
+          <div class="post__display-textare">
+            <input type="text" class="post-title" placeholder="New post title here..."
+              value="<?php echo $blog['title']; ?>">
+
+          </div>
+          <?php
+        }
+        ?>
+
         <?php
         include 'config/dbconfig.php'; // Đảm bảo đường dẫn này phản ánh đúng cấu trúc thư mục của bạn
         
@@ -113,10 +192,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </option>
           <?php endforeach; ?>
         </select>
-        <div class="tags-container" id="tags-container">
-          <!-- Selected tags will appear here -->
-        </div>
-
+        
+        <?php 
+         include 'config/dbconfig.php';
+        $tags = getBlogTags($id_bai_viet);
+        $numberOfTags = ($tags && is_array($tags)) ? count($tags) : 0;
+           
+    echo '<div class="tags-container" id="tags-container">';
+    foreach ($tags as $tag) {
+      $tagId = str_replace(' ', '-', $tag); 
+      echo '<span class="tag" id="tag-' . htmlspecialchars($tagId) . '" onclick="removeTag(\'' . htmlspecialchars($tagId) . '\');">' . htmlspecialchars($tag) . ' x</span>';
+  }
+        echo '</div>'; ?>
         <p id="error-message" class="error"></p>
 
       </div>
@@ -146,12 +233,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         </div>
       </div>
-      <form id="postForm" action="/hung" method="post">
-        <textarea id="article_body_markdown" name="article_body_markdown" class="textarea"
-          placeholder="Write your post content here..."></textarea>
-        <button type="button" onclick="savePost()">Save</button>
-      </form>
-
+      <?php
+      include("./config/dbconfig.php");
+      $blog = findBlogById($id_bai_viet);
+      if ($blog) {
+        ?>
+        <form id="postForm" action="/hung" method="post">
+          <textarea id="article_body_markdown" name="article_body_markdown" class="textarea"
+            placeholder="Write your post content here..."><?php echo htmlspecialchars($blog["content"]); ?></textarea>
+          <button type="button" onclick="savePost()">Save</button>
+        </form>
+        <?php
+      }
+      ?>
     </div>
   </div>
   <script>
@@ -172,12 +266,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           errorMessage.textContent = '';
         }
       } else {
-        // Reset the dropdown if no selection or tag already exists
-        dropdown.selectedIndex = 0;
+
+        dropdown.selectedIndex = <?php echo $numberOfTags?>;
       }
     }
 
-document.addEventListener('click', function(event) {
+
+    function removeTag(tagId) {
+    var tag = document.getElementById('tag-'+tagId);
+    if (tag) {
+        tag.parentNode.removeChild(tag);
+    }
+    // Các xử lý khác nếu cần
+
+
+      // Check if less than 2 tags, show error
+      var tagsContainer = document.getElementById('tags-container');
+      var errorMessage = document.getElementById('error-message');
+
+    }
+    document.addEventListener('click', function(event) {
     if (event.target.classList.contains('tag')) {
         // Lấy ID của tag
         var tagId = event.target.id;
@@ -185,18 +293,6 @@ document.addEventListener('click', function(event) {
         removeTag(tagId);
     }
 });
-
-    function removeTag(tagValue) {
-      var tag = document.getElementById('tag-' + tagValue);
-      if (tag) {
-        tag.parentNode.removeChild(tag);
-      }
-
-      // Check if less than 2 tags, show error
-      var tagsContainer = document.getElementById('tags-container');
-      var errorMessage = document.getElementById('error-message');
-
-    }
     function insertMarkdown(before, after) {
       const textarea = document.getElementById('article_body_markdown');
       const start = textarea.selectionStart;
@@ -288,7 +384,7 @@ document.addEventListener('click', function(event) {
     function triggerFileInput() {
       document.getElementById('hung').click();
     }
-    var uploadedFileName;
+    var uploadedFileName = <?php echo json_encode($banner ?? ''); ?>;;
     //biến cục bộ xử lý xóa
     function displayImage() {
       var input = document.getElementById('hung');
@@ -347,7 +443,7 @@ document.addEventListener('click', function(event) {
       }
     }
     function savePost() {
-      console.log("dc")
+
       var formData = new FormData();
       if (uploadedFileName) {
         const temp = 'upload_Banner/' + uploadedFileName;
@@ -355,7 +451,7 @@ document.addEventListener('click', function(event) {
       }
       formData.append('title', document.querySelector('.post-title').value);
       formData.append('content', document.getElementById('article_body_markdown').value);
-
+      formData.append('id_Bog', <?php echo $id_bai_viet?>);
       // Thêm các tags
       var tags = document.querySelectorAll('.tags-container .tag');
       tags.forEach(function (tag, index) {
@@ -363,20 +459,19 @@ document.addEventListener('click', function(event) {
       });
 
       // Trong hàm savePost() của bạn
-      fetch('SavePost.php', {
+      fetch('UpdatePost.php', {
         method: 'POST',
         body: formData
       })
         .then(response => response.text())
         .then(data => {
-          console.log('Success:', data); // Log thông báo thành công vào console
-          alert('Lưu dữ liệu thành công: ' + data); // Hiển thị thông báo cho người dùng
+          console.log(data); // Log thông báo thành công vào console
+          alert('Success');
         })
         .catch((error) => {
           console.error('Error:', error);
-          // Xử lý lỗi
-        });
 
+        });
     }
   </script>
 </body>
