@@ -65,7 +65,6 @@
       // Mã hóa dữ liệu để truyền lên server (có thể sử dụng JSON)
       var data = "commentText=" + encodeURIComponent(commentText);
 
-      // Gửi request POST đến server
       xhr.open("POST", "save_comment.php", true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       xhr.send(data);

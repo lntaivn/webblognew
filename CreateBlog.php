@@ -21,8 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit(); // Stop the script after handling upload
   }
 
-
-
   /////////////////////////////////////////////////
   elseif (isset($_FILES["hung"])) {
     $target_dir = "upload_Banner/";
@@ -356,19 +354,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         formData.append('tags[' + index + ']', tag.textContent.replace(' x', ''));
       });
 
+      // Trong hàm savePost() của bạn
       fetch('SavePost.php', {
         method: 'POST',
         body: formData
       })
-        .then(response => response.text()) // sử dụng response.text() nếu server trả về không phải JSON
+        .then(response => response.text())
         .then(data => {
-          console.log('Success:', data);
-          // Xử lý sau khi lưu thành công
+          console.log('Success:', data); // Log thông báo thành công vào console
+          alert('Lưu dữ liệu thành công: ' + data); // Hiển thị thông báo cho người dùng
         })
         .catch((error) => {
           console.error('Error:', error);
           // Xử lý lỗi
         });
+
     }
   </script>
 </body>
