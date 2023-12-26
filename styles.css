@@ -7,6 +7,13 @@
     margin: 5px 0;
 }
 
+.card-image img {
+    margin-top: 30px;
+    width: 780px;
+    height: 250px;
+    display: block;
+}
+
 .card-header {
     display: flex;
     align-items: center;

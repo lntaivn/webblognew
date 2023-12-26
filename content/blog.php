@@ -90,6 +90,7 @@ $comment = $row["number_of_comments"];
       a i {
             color: black;
       }
+
       .wizard-image {
             max-width: 950px !important;
             max-height: 339px;
@@ -130,8 +131,8 @@ $comment = $row["number_of_comments"];
                               </div>
                               <div>
                                     <?php
-                        echo $ranking;
-                        ?>
+                                    echo $ranking;
+                                    ?>
                               </div>
 
                         </li>
@@ -181,18 +182,14 @@ $comment = $row["number_of_comments"];
                     mysqli_stmt_execute($stmt);
                     $result = mysqli_stmt_get_result($stmt);
 
-                    if ($row = mysqli_fetch_assoc($result)) {
-                        // Tạo một đối tượng Parsedown mới
-                        $parsedown = new Parsedown();
+                              if ($row = mysqli_fetch_assoc($result)) {
+                                    // Tạo một đối tượng Parsedown mới
+                                    $parsedown = new Parsedown();
 
                         // Chuyển đổi Markdown sang HTML
                         $htmlContent = $parsedown->text($row['content']);
                         // Display the blog content dynamically
                         echo '<img src="../' . $row["banner"] . '" alt="Banner Image" class="wizard-image">';
-                        if (isset($_SESSION["user"]) && $_SESSION["user"] == $email) {
-                              // Hiển thị nút chỉnh sửa
-                              echo '<div class="edit_bloger"><a href="../edit_blog.php?id=' . $id . '" class="edit-button">Edit</a></div>';
-                        }
                         echo '<div class="article-info">';
                         echo '<div class="blog-ranking">';
                         echo '</div>';
@@ -206,13 +203,7 @@ $comment = $row["number_of_comments"];
                         echo '<p class="article-summary">' . htmlspecialchars($row['summary']) . '</p>';
                         echo '<div class="article-content">' . $htmlContent . '</div>';
                         echo '<div class="tags">';
-                        $tags = getBlogTags($id);
-                        echo '<div class="tags_list">';
-                        foreach ($tags as $tag) {
-                              $tagId = str_replace(' ', '-', $tag); 
-                              echo '<span class="tag" id="tag-' . htmlspecialchars($tagId) . '">' . htmlspecialchars($tag) . '</span>';
-                        }
-                        echo '</div>';
+                        // Tags or other elements could be added here
                         echo '</div></div>';
                     } else {
                         echo 'Blog post not found.';
@@ -220,22 +211,25 @@ $comment = $row["number_of_comments"];
                 }
 
                 if ($id_bai_viet) {
-                    showBlog($id_bai_viet,$email);
+                    showBlog($id_bai_viet);
                 }
                 ?>
 
                   </div>
                   <div class="center-comment">
                         <?php
-                include('../comment/comment.php');
-                ?>
+                        include('../comment/comment.php');
+                        ?>
                   </div>
             </div>
 
             <!-- thong tin nguoi dung -->
             <?php
         include("../config/dbconfig.php");
+        // Giả sử bạn muốn hiển thị thông tin người dùng có id_user là 1
+        $id_user = 1;
 
+        // Truy vấn cơ sở dữ liệu để lấy thông tin người dùng
         $sql = "SELECT * FROM user WHERE id_user = ?";
         $stmt = $kn->prepare($sql);
         $stmt->bind_param("i", $id_user);
@@ -243,7 +237,7 @@ $comment = $row["number_of_comments"];
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-
+            // Lấy thông tin người dùng và hiển thị
             $row = $result->fetch_assoc();
             ?>
             <aside class="user-profile">
@@ -268,18 +262,19 @@ $comment = $row["number_of_comments"];
                   </div>
             </aside>
             <?php
-        } else {
-            echo "User not found.";
-        }
-        // Đóng kết nối
-        $kn->close();
-        ?>
+            } else {
+                  echo "User not found.";
+            }
+            // Đóng kết nối
+            $kn->close();
+            ?>
 
       </div>
 
 </body>
 <script>
 window.onload = function() {
+      var id_post = <?php echo json_encode($id_bai_viet); ?>;
       // Bắt sự kiện khi rê chuột vào ngôi sao
       document.querySelectorAll('.star-rating .star').forEach(item => {
             item.addEventListener('mouseover', function() {
@@ -301,7 +296,6 @@ window.onload = function() {
 
             item.addEventListener('click', function() {
                   let count_vote = this.getAttribute('data-value');
-                  let id_post = 1;
 
                   fetch('../save_vote.php', {
                               method: 'POST',
@@ -323,6 +317,7 @@ window.onload = function() {
                                     const data = JSON.parse(
                                           text); // Cố gắng parse text thành JSON
                                     alert("Bạn đã chọn " + count_vote + " sao.");
+                                    location.reload();
                               } catch (error) {
                                     console.error('Error parsing JSON:', text);
                                     throw new Error('Error parsing JSON: ' + error);
