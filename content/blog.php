@@ -73,6 +73,10 @@ $comment = $row["number_of_comments"];
       a i {
             color: black;
       }
+      .wizard-image {
+            max-width: 950px !important;
+            max-height: 339px;
+      }
       </style>
 </head>
 
