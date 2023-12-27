@@ -114,14 +114,6 @@ if (isset($_SESSION["user"])) {
 
 
          <!-- #region-->
-
-
-
-
-
-
-
-
                 <div class="post-preview-grid">
                     <?php if (isset($_SESSION["user"])) {
                         $email = $_SESSION["user"];
@@ -164,7 +156,7 @@ if (isset($_SESSION["user"])) {
                                         echo '</div>';
 
 
-                                        echo '<h3 class="post-preview__title">' . $title . '</h3>';
+                                        echo '<h3 class="post-preview__title"><a href="../content/blog.php?id=' . $id_blog . '">' . $title . '<a/></h3>';
                                         echo '<div class="post-preview__footer">';
                                         echo '<button class="post-preview__comment-btn"><i class="fa-regular fa-comment"></i>Add
                                 Comment</button>';

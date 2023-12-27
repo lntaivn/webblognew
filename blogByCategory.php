@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_start();
 ?>
 
 <!DOCTYPE html>
@@ -24,16 +23,14 @@ session_start();
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./css/responsive__bodyFlex.css" />
     <link rel="stylesheet" href="styles.css" />
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="path/to/your/script.js"></script>
 </head>
 
 <body>
-
     <div class="app">
         <header class="header">
             <div class="header-with-search">
@@ -56,14 +53,12 @@ session_start();
                     <?php
                     if (isset($_SESSION["user"])) {
                         echo ("<a href='logout.php' class='header__login'>
-                            <a class='header__login' href='./user/profileUser.php'><i class='fa-regular fa-user'></i></i></a>
-                            <a class='header__login'>Logout</a>
-                        </a>");
+                                <p>Logout</p>
+                            </a>");
                     } else {
                         echo ("<a href='login.php' class='header__login'>
                                 <p>Login</p>
                             </a>
-                            
                             <a href='register.php' class='header__CreateAcc'>
                                 <p>Create Account</p>
                             </a>");
@@ -116,22 +111,18 @@ session_start();
                         <div class="body-flexSecond__Post-user-avatar"></div>
 
                         <div class="body-flexSecond__Post-user-name">
-                            <span class="body-flexSecond__Post-user-name-abbreviations">Mamadou
-                                DICKO</span>
+                            <span class="body-flexSecond__Post-user-name-abbreviations">Mamadou DICKO</span>
                             for
-                            <span class="body-flexSecond__Post-user-name-fullname">Serverless By
-                                Theodo</span>
+                            <span class="body-flexSecond__Post-user-name-fullname">Serverless By Theodo</span>
                             <br />
                             Posted on Oct 10
                         </div>
 
                     </div>
 
-
-
-
-
                     <!-- <div class="body-flexSecond__Post-by-user-content">
+     
+
                     </div> -->
 
                     <div class="body-flexSecond__TOP-Post">
@@ -142,12 +133,11 @@ session_start();
                             <a href="#" class="body-flexSecond__Top-name-tags-four">#tutorial</a>
                         </div>
                     </div>
-
                 </div>
 
 
                 <?php
-                include("content/card.php");
+                include("content/cardByCategory.php");
                 ?>
 
             </div>
@@ -155,10 +145,7 @@ session_start();
             <!-- <div class="body-flex__third">
                      <h1>hung</h1>
             </div> -->
-            <?php
-            include('content/rightContent.php');
-            ?>
-            <!-- <div class="body-flexFist__ row row3">
+            <div class="body-flexFist__ row row3">
                 <div class="body-flexFist__login">
                     <div class="body-flexFist__login-content">
                         <h1>DEV Community is a</h1>
@@ -176,9 +163,34 @@ session_start();
                         <a href="#" class="flexFist__login-button-login">login</a>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
-</body>
+    // Đoạn mã này nên được đặt trong một thẻ
+    <script> hoặc một file.js riêng
+        function loadPostsByCategory(categoryId) {
+            $.ajax({
+                url: 'content/cardByCategory.php', // Đảm bảo đường dẫn đến file PHP là đúng
+                type: 'GET',
+                data: { id: categoryId },
+                success: function (response) {
+                    // Giả sử bạn có một container trong HTML để chứa các bài viết
+                    document.getElementById('blogContainer').innerHTML = response;
+                },
+                error: function (error) {
+                    console.error('Error fetching posts:', error);
+                }
+            });
+        }
 
-</html>
+        // Bắt sự kiện click trên các category
+        document.querySelectorAll('.category-list li').forEach(function (li) {
+            li.addEventListener('click', function () {
+                var categoryId = this.getAttribute('data-category-id');
+                loadPostsByCategory(categoryId);
+            });
+        });
+
+</body >
+
+</html >
