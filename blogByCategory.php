@@ -141,29 +141,9 @@ session_start();
                 ?>
 
             </div>
-
-            <!-- <div class="body-flex__third">
-                     <h1>hung</h1>
-            </div> -->
-            <div class="body-flexFist__ row row3">
-                <div class="body-flexFist__login">
-                    <div class="body-flexFist__login-content">
-                        <h1>DEV Community is a</h1>
-                        <h1>community of</h1>
-                        <h1>1,161,805 amazing</h1>
-                        <h1>developers</h1>
-                        <p>
-                            We're a place where coders share, stay
-                            up-to-date and grow their careers.
-                        </p>
-                    </div>
-                    <div class="body-flexFist__login-button">
-                        <a href="#" class="flexFist__login-button-Create">Create</a>
-
-                        <a href="#" class="flexFist__login-button-login">login</a>
-                    </div>
-                </div>
-            </div>
+            <?php
+            include('content/rightContent.php');
+            ?>
         </div>
     </div>
     // Đoạn mã này nên được đặt trong một thẻ

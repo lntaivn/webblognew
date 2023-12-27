@@ -55,10 +55,9 @@ session_start();
                     </a>
                     <?php
                     if (isset($_SESSION["user"])) {
-                        echo ("<a href='logout.php' class='header__login'>
+                        echo ("<a href='logout.php' class='header__login'>Logout</a>
                             <a class='header__login' href='./user/profileUser.php'><i class='fa-regular fa-user'></i></i></a>
-                            <a class='header__login'>Logout</a>
-                        </a>");
+                            ");
                     } else {
                         echo ("<a href='login.php' class='header__login'>
                                 <p>Login</p>
@@ -75,7 +74,10 @@ session_start();
         </header>
 
         <div class="main-flex">
-            <!-- <div class="body-flexFist__ row row1">
+            <?php
+            if (!isset($_SESSION["user"])) {
+                echo ('
+                <div class="body-flexFist__ row row1">
                 <div class="body-flexFist__login">
                     <div class="body-flexFist__login-content">
                         <h1>DEV Community is a</h1>
@@ -83,8 +85,7 @@ session_start();
                         <h1>1,161,805 amazing</h1>
                         <h1>developers</h1>
                         <p>
-                            We're a place where coders share, stay
-                            up-to-date and grow their careers.
+                            Hãy đăng nhập
                         </p>
                     </div>
                     <div class="body-flexFist__login-button">
@@ -93,11 +94,13 @@ session_start();
                         <a href="#" class="flexFist__login-button-login">login</a>
                     </div>
                 </div>
-            </div> -->
-            <?php include 'content/leftContent.php'; ?>
+            </div>
+                    ');
+            } else {
+                include 'content/leftContent.php';
 
-
-
+            }
+            ?>
             <div class="body-flexSecond__ row row2">
 
                 <!-- time top -->
