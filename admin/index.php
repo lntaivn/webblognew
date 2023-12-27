@@ -2,10 +2,46 @@
 session_start();
 
 if (!isset($_SESSION["user"])) {
-  echo "<script language=javascript>
+    echo "<script language=javascript>
 alert('Vui lòng đăng nhập!');
 window.location='login.html';
 </script>";
+}
+?>
+
+<?php
+include('config/dbconfig.php');
+
+// Kiểm tra kết nối
+if ($kn->connect_error) {
+    die("Connection failed: " . $kn->connect_error);
+}
+
+//Câu truy vấn để lấy tổng số lượng người dùng 
+$sql = "SELECT COUNT(*) as total_users FROM user";
+$result = $kn->query($sql);
+
+// Khai báo biến để lưu trữ tổng số người dùng
+$totalUsers = 0;
+
+// Kiểm tra và lấy giá trị tổng số người dùng
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $totalUsers = $row["total_users"];
+    }
+}
+
+//Câu truy vấn để lấy tổng số lượng blog
+$sql1 = "SELECT COUNT(*) as total_blogs FROM blog";
+$result1 = $kn->query($sql1);
+
+$totalBlogs = 0;
+
+// Kiểm tra và lấy giá trị tổng số người dùng
+if ($result1->num_rows > 0) {
+    while ($row = $result1->fetch_assoc()) {
+        $totalBlogs = $row["total_blogs"];
+    }
 }
 ?>
 
@@ -52,8 +88,8 @@ window.location='login.html';
 
                 <!-- Topbar -->
                 <?php
-                    include("topBar.php")
-                ?>
+                include("topBar.php")
+                    ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -76,8 +112,10 @@ window.location='login.html';
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                                Total Users </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalUsers; ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -94,8 +132,10 @@ window.location='login.html';
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Total Blogs</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $totalUsers; ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -111,11 +151,13 @@ window.location='login.html';
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Tasks
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                        50%</div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
@@ -142,7 +184,8 @@ window.location='login.html';
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -163,7 +206,8 @@ window.location='login.html';
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview
+                                    </h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -175,7 +219,8 @@ window.location='login.html';
                                             <a class="dropdown-item" href="#">Action</a>
                                             <a class="dropdown-item" href="#">Another action</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" href="#">Something else
+                                                here</a>
                                         </div>
                                     </div>
                                 </div>
@@ -206,7 +251,8 @@ window.location='login.html';
                                             <a class="dropdown-item" href="#">Action</a>
                                             <a class="dropdown-item" href="#">Another action</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
+                                            <a class="dropdown-item" href="#">Something else
+                                                here</a>
                                         </div>
                                     </div>
                                 </div>
@@ -358,11 +404,14 @@ window.location='login.html';
                                         <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
                                             src="img/undraw_posting_photo.svg" alt="...">
                                     </div>
-                                    <p>Add some quality, svg illustrations to your project courtesy of <a
-                                            target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                        constantly updated collection of beautiful svg images that you can use
-                                        completely free and without attribution!</p>
-                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
+                                    <p>Add some quality, svg illustrations to your project courtesy of
+                                        <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
+                                        constantly updated collection of beautiful svg images that
+                                        you can use
+                                        completely free and without attribution!
+                                    </p>
+                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse
+                                        Illustrations on
                                         unDraw &rarr;</a>
                                 </div>
                             </div>
@@ -370,13 +419,17 @@ window.location='login.html';
                             <!-- Approach -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Development Approach
+                                    </h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
+                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes
+                                        in order to reduce
+                                        CSS bloat and poor page performance. Custom CSS classes are
+                                        used to create
                                         custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with the
+                                    <p class="mb-0">Before working with this theme, you should become
+                                        familiar with the
                                         Bootstrap framework, especially the utility classes.</p>
                                 </div>
                             </div>
@@ -422,7 +475,8 @@ window.location='login.html';
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.
+                </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="logout.php">Logout</a>
