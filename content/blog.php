@@ -268,7 +268,7 @@ $comment = $row["number_of_comments"];
                         echo '<div class="blog-ranking">';
                         echo '</div>';
                         echo '<div class="author-info">';
-                        echo '<img src="./../img/logo.png" alt="' . htmlspecialchars($row['author_name']) . '" class="author-image">';
+                        echo '<img src="'.htmlspecialchars($row['hungave']).'" alt="' . htmlspecialchars($row['author_name']) . '" class="author-image">';
                         echo '<div class="author-details">';
                         echo '<span class="author-name">' . htmlspecialchars($row['author_name']) . '</span>';
                         echo '<span class="post-date">Posted on ' . htmlspecialchars($row['date']) . '</span>';
