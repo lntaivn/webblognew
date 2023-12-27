@@ -38,7 +38,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     // Generating the HTML content
     echo '<div class="card" style="width: 100%; height: 192px; min-height:192px">';
     echo '    <div class="card-header">';
-    echo '        <img src="profile-picture-url.jpg" alt="Profile" class="profile-img">';
+    echo '        <img src="./' . htmlspecialchars($avt) . '" alt="Profile" class="profile-img">';
     echo '        <span class="date" style="font-weight: 700">' . htmlspecialchars($name) . '</span>';
     echo '    </div>';
     echo '    <div class="card-body">';
@@ -51,7 +51,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     echo '    </div>';
     echo '    <div class="card-footer">';
     echo '        <button class="reaction-button">' . htmlspecialchars($reactions) . '&nbsp<i class="fa fa-star" style="color: gold;"></i> </button>';
-    echo '        <button class="comments-button">💬 ' . htmlspecialchars($comments) . ' comments</button>';
+    echo '        <button class="comments-button">1💬 ' . htmlspecialchars($comments) . ' comments</button>';
     echo '        <span class="read-time">' . htmlspecialchars($readTime) . '</span>';
 
     echo '        </div>';

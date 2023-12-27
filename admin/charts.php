@@ -28,8 +28,8 @@
 
             <!-- Sidebar -->
             <?php
-        include("sideBar.php");
-        ?>
+            include("sideBar.php");
+            ?>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -40,8 +40,8 @@
 
                         <!-- Topbar -->
                         <?php
-                include("topBar.php")
-                    ?>
+                        include("topBar.php")
+                              ?>
                         <!-- End of Topbar -->
 
                         <!-- Begin Page Content -->
@@ -87,45 +87,45 @@
                                                       </div>
                                                       <!-- BarChart -->
                                                       <?php
-                                    // Kết nối đến cơ sở dữ liệu
-                                    include('config/dbconfig.php');
+                                                      // Kết nối đến cơ sở dữ liệu
+                                                      include('config/dbconfig.php');
 
-                                    // Kiểm tra kết nối
-                                    if ($kn->connect_error) {
-                                        die("Connection failed: " . $kn->connect_error);
-                                    }
+                                                      // Kiểm tra kết nối
+                                                      if ($kn->connect_error) {
+                                                            die("Connection failed: " . $kn->connect_error);
+                                                      }
 
-                                    // Truy vấn cơ sở dữ liệu để lấy danh sách người dùng với tổng số bài post
-                                    $sql = "SELECT user.id_user, user.name, user.email, user.gender, COUNT(blog.id_blog) AS total_posts
-                                              FROM user
-                                              LEFT JOIN blog ON user.id_user = blog.id_user
-                                              GROUP BY user.id_user, user.name, user.email, user.gender";
+                                                      // Truy vấn cơ sở dữ liệu để lấy danh sách người dùng với tổng số bài post
+                                                      $sql = "SELECT user.id_user, user.name, user.email, user.gender, COUNT(blog.id_blog) AS total_posts
+                                                            FROM user
+                                                            LEFT JOIN blog ON user.id_user = blog.id_user
+                                                            GROUP BY user.id_user, user.name, user.email, user.gender";
 
-                                    $result = $kn->query($sql);
+                                                      $result = $kn->query($sql);
 
-                                    // Kiểm tra kết quả truy vấn
-                                    if ($result->num_rows > 0) {
-                                        $data = array();
-                                        // Tạo mảng dữ liệu cho biểu đồ
-                                        while ($row = $result->fetch_assoc()) {
-                                            $data[] = array(
-                                                'label' => $row['name'],
-                                                'data' => $row['total_posts'],
-                                            );
-                                        }
-                                        // Chuyển mảng dữ liệu sang JSON để truyền vào biểu đồ
-                                        $json_data = json_encode($data);
-                                        ?>
-                                                      <!-- Truyền dữ liệu vào biểu đồ -->
+                                                      // Kiểm tra kết quả truy vấn
+                                                      if ($result->num_rows > 0) {
+                                                            $data = array();
+                                                            // Tạo mảng dữ liệu cho biểu đồ
+                                                            while ($row = $result->fetch_assoc()) {
+                                                                  $data[] = array(
+                                                                        'label' => $row['name'],
+                                                                        'data' => $row['total_posts'],
+                                                                  );
+                                                            }
+                                                            // Chuyển mảng dữ liệu sang JSON để truyền vào biểu đồ
+                                                            $json_data = json_encode($data);
+                                                            ?>
+                                                            <!-- Truyền dữ liệu vào biểu đồ -->
 
-                                                      <?php
-                                    } else {
-                                        echo "0 results";
-                                    }
+                                                            <?php
+                                                      } else {
+                                                            echo "0 results";
+                                                      }
 
-                                    // Đóng kết nối
-                                    $kn->close();
-                                    ?>
+                                                      // Đóng kết nối
+                                                      $kn->close();
+                                                      ?>
                                                       <hr>
                                                       Số lượng bài viết của người dùng
 
@@ -136,28 +136,28 @@
 
                                     <!-- Donut Chart -->
                                     <?php
-                        include('config/dbconfig.php'); // Adjust this include path as needed
-                        
-                        $sql = "SELECT categories.name, COUNT(blogs_to_categories.id_blog) as post_count
+                                    include('config/dbconfig.php'); // Adjust this include path as needed
+                                    
+                                    $sql = "SELECT categories.name, COUNT(blogs_to_categories.id_blog) as post_count
                                             FROM categories
                                             LEFT JOIN blogs_to_categories ON categories.id_category = blogs_to_categories.id_category
                                             GROUP BY categories.name";
 
-                        $result = $kn->query($sql);
-                        $categories = [];
-                        $counts = [];
+                                    $result = $kn->query($sql);
+                                    $categories = [];
+                                    $counts = [];
 
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $categories[] = $row['name'];
-                                $counts[] = (int) $row['post_count'];
-                            }
-                        } else {
-                            echo "0 results";
-                        }
+                                    if ($result->num_rows > 0) {
+                                          while ($row = $result->fetch_assoc()) {
+                                                $categories[] = $row['name'];
+                                                $counts[] = (int) $row['post_count'];
+                                          }
+                                    } else {
+                                          echo "0 results";
+                                    }
 
-                        $kn->close();
-                        ?>
+                                    $kn->close();
+                                    ?>
 
                                     <div class="col-xl-4 col-lg-5">
                                           <div class="card shadow mb-4">
@@ -248,45 +248,45 @@
 </body>
 <!-- Script BarChart -->
 <script>
-var ctx = document.getElementById("myBarChart");
-var data = <?php echo $json_data; ?>;
-var labels = data.map(item => item.label);
-var values = data.map(item => item.data);
+      var ctx = document.getElementById("myBarChart");
+      var data = <?php echo $json_data; ?>;
+      var labels = data.map(item => item.label);
+      var values = data.map(item => item.data);
 
-var myBarChart = new Chart(ctx, {
-      type: "bar",
-      data: {
-            labels: labels,
-            datasets: [{
-                  label: "Total Posts",
-                  backgroundColor: "#4e73df",
-                  hoverBackgroundColor: "#2e59d9",
-                  borderColor: "#4e73df",
-                  data: values,
-            }, ],
-      },
-      // ... (các options khác của biểu đồ)
-});
+      var myBarChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                  labels: labels,
+                  datasets: [{
+                        label: "Total Posts",
+                        backgroundColor: "#4e73df",
+                        hoverBackgroundColor: "#2e59d9",
+                        borderColor: "#4e73df",
+                        data: values,
+                  },],
+            },
+            // ... (các options khác của biểu đồ)
+      });
 </script>
 <script>
-var pieCtx = document.getElementById("myPieChart");
+      var pieCtx = document.getElementById("myPieChart");
 
-// PHP block to fetch data from the database
+      // PHP block to fetch data from the database
 
-var myPieChart = new Chart(pieCtx, {
-      type: 'doughnut',
-      data: {
-            labels: <?php echo json_encode($categories); ?>,
-            datasets: [{
-                  data: <?php echo json_encode($counts); ?>,
-                  backgroundColor: ['#4e73df', '#1cc88a',
-                  '#36b9cc'], // Add more colors as needed
-                  hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-                  hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
-      },
+      var myPieChart = new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                  labels: <?php echo json_encode($categories); ?>,
+                  datasets: [{
+                        data: <?php echo json_encode($counts); ?>,
+                        backgroundColor: ['#4e73df', '#1cc88a',
+                              '#36b9cc'], // Add more colors as needed
+                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                        hoverBorderColor: "rgba(234, 236, 244, 1)",
+                  }],
+            },
 
-});
+      });
 </script>
 
 </html>

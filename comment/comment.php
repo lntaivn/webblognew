@@ -1,7 +1,3 @@
-
-
-
-
 <div class="center-comment" id="comment">
       <div class="add-comment">
             <form action="../comment/savecomment.php" method="POST" onsubmit="return submitComment()">
