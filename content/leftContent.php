@@ -1,7 +1,8 @@
 <style>
     .sidebar {
+        margin-top: 20px;
         width: 250px;
-        background: #fff;
+        background: #f8f9fc;
         padding: 20px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
@@ -47,6 +48,23 @@
     .category-list .title {
         color: #333;
         font-size: 16px;
+    }
+
+    a:link {
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    a:visited {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    a:active {
+        text-decoration: underline;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

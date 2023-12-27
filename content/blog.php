@@ -225,6 +225,7 @@ $comment = $row["number_of_comments"];
 </body>
 <script>
 window.onload = function() {
+      var id_post = <?php echo json_encode($id_bai_viet); ?>;
       // Bắt sự kiện khi rê chuột vào ngôi sao
       document.querySelectorAll('.star-rating .star').forEach(item => {
             item.addEventListener('mouseover', function() {
@@ -246,7 +247,6 @@ window.onload = function() {
 
             item.addEventListener('click', function() {
                   let count_vote = this.getAttribute('data-value');
-                  let id_post = 1;
 
                   fetch('../save_vote.php', {
                               method: 'POST',
@@ -268,6 +268,7 @@ window.onload = function() {
                                     const data = JSON.parse(
                                           text); // Cố gắng parse text thành JSON
                                     alert("Bạn đã chọn " + count_vote + " sao.");
+                                    location.reload();
                               } catch (error) {
                                     console.error('Error parsing JSON:', text);
                                     throw new Error('Error parsing JSON: ' + error);
