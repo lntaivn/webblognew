@@ -1,25 +1,31 @@
 /* Reset some default styles for better consistency */
-body, h1, h2, p, button, input {
-  margin: 0;
-  padding: 0;
+body,
+h1,
+h2,
+p,
+button,
+input {
+  margin     : 0;
+  padding    : 0;
   font-family: Arial, sans-serif;
 }
 
 img {
-  width: 32px;
-  height: 32px;
+  width        : 32px;
+  height       : 32px;
   border-radius: 50%;
-}  
-.page-wrapper-main{
-  display: flex;
-  flex-direction: column;
-  width: 100% ;
-  height: 100vh;
 }
 
-.page-wrapper-comment{
-  display: flex;
-  width: 100%;
+.page-wrapper-main {
+  display       : flex;
+  flex-direction: column;
+  width         : 100%;
+  height        : 100vh;
+}
+
+.page-wrapper-comment {
+  display       : flex;
+  width         : 100%;
   flex-direction: column;
 }
 
@@ -27,49 +33,60 @@ img {
 
 /* Main container styles */
 .comments-container {
-  max-width: 400px;
-  margin: 20px auto;
-  background: #f9f9f9;
-  border: 1px solid #ddd;
+  max-width    : 400px;
+  margin       : 20px auto;
+  background   : #f9f9f9;
+  border       : 1px solid #ddd;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow   : 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Header styles */
 .comments-header {
-  background: #fff;
-  border-radius: 5px 5px 0 0;
-  padding: 10px;
-  display: flex;
+  background     : #fff;
+  border-radius  : 5px 5px 0 0;
+  padding        : 10px;
+  display        : flex;
   justify-content: space-between;
-  align-items: center;
+  align-items    : center;
 }
 
 .comments-header h2 {
-  font-size: 20px;
+  font-size  : 20px;
   font-weight: bold;
-  margin: 0;
+  margin     : 0;
 }
 
-.subscribe-button {
-  background: #4CAF50;
-  color: #fff;
-  border: none;
+.add-comment-submit {
+  background   : #4CAF50;
+  color        : #fff;
+  border       : none;
   border-radius: 5px;
-  padding: 8px 16px;
-  cursor: pointer;
+  padding      : 8px 16px;
+  cursor       : pointer;
 }
+
+.add-comment-cancel {
+  background   : #cccccc;
+  color        : black;
+  border       : none;
+  border-radius: 5px;
+  padding      : 8px 16px;
+  cursor       : pointer;
+}
+
 .add-comment {
   padding: 10px;
 }
+
 /* Input field styles */
 .add-comment input[type="text"] {
-  width: 95%;
-  height: 30px;
-  padding: 10px;
-  border: 1px solid #ddd;
+  width        : 95%;
+  height       : 30px;
+  padding      : 10px;
+  border       : 1px solid #ddd;
   border-radius: 5px;
-  margin: 10px 0;
+  margin       : 10px 0;
 }
 
 /* .add-comment input[type="text"]:focus {
@@ -80,67 +97,68 @@ img {
   display: none;
   transition: 0.3s;
 } */
-/* 
-.add-comment input:focus ~ button {
+
+.add-comment input:focus~button {
   display: inline-block;
 }
+
 .add-comment button:first-child {
   margin-right: 10px;
-} */
+}
 
 .add-comment-summit {
-  background: #4CAF50;
-  color: #fff;
-  border: none;
+  background   : #4CAF50;
+  color        : #fff;
+  border       : none;
   border-radius: 5px;
-  padding: 8px 16px;
-  cursor: pointer;
+  padding      : 8px 16px;
+  cursor       : pointer;
 }
 
 .add-comment-cannel {
-  background: #ccc;
-  color: #fff;
-  border: none;
+  background   : #ccc;
+  color        : #fff;
+  border       : none;
   border-radius: 5px;
-  padding: 8px 16px;
-  cursor: pointer;
+  padding      : 8px 16px;
+  cursor       : pointer;
 }
+
 /* Comment styles */
 .comment {
-  display: flex;
-  padding: 20px;
+  display      : flex;
+  padding      : 20px;
   border-bottom: 0px solid #ddd;
 }
 
 
 
 .comment-avatar {
-  width: 32px;
-  height: 32px;
-  background: #ccc; /* Placeholder background color for avatar */
+  width        : 32px;
+  height       : 32px;
+  background   : #ccc;
+  /* Placeholder background color for avatar */
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right : 10px;
 }
+
 .comment-content {
-  flex: 1; 
-  box-shadow: 0 0 0 1px #ddd;
-  /* border: 1px solid #ddd; */
+  flex         : 1;
+  box-shadow   : 0 0 0 1px #ddd;
+  /* border    : 1px solid #ddd; */
   border-radius: 5px;
-  padding: 8px;
+  padding      : 8px;
 }
+
 .comment-author {
   font-weight: bold;
 }
 
 .comment-date {
   font-size: 14px;
-  color: #777;
+  color    : #777;
 }
 
 .comment-text {
   margin-top: 5px;
 }
-
-
-
-
