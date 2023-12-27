@@ -23,6 +23,7 @@ session_start();
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300&display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />    
     <link rel="stylesheet" href="./css/responsive__bodyFlex.css" />
     <link rel="stylesheet" href="styles.css" />
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
@@ -49,15 +50,19 @@ session_start();
                     <a href="CreateBlog.php" class="header__login">
                         <p>Create Blog</p>
                     </a>
-                    <?php
-                    if (isset($_SESSION["user"])) {
-                        echo ("<a href='logout.php' class='header__login'>
-                                <p>Logout</p>
-                            </a>");
-                    } else {
-                        echo ("<a href='login.php' class='header__login'>
+                    <?php 
+                    if(isset($_SESSION["user"])){
+                        echo("<a href='logout.php' class='header__login'>
+                            <a class='header__login' href='./user/profileUser.php'><i class='fa-regular fa-user'></i></i></a>
+                            <a class='header__login'>Logout</a>
+                        </a>");
+                    }
+                    
+                    else{
+                        echo("<a href='login.php' class='header__login'>
                                 <p>Login</p>
                             </a>
+                            
                             <a href='register.php' class='header__CreateAcc'>
                                 <p>Create Account</p>
                             </a>");
@@ -120,7 +125,8 @@ session_start();
                     </div>
 
                     <!-- <div class="body-flexSecond__Post-by-user-content">
-     
+
+        
 
                     </div> -->
 
