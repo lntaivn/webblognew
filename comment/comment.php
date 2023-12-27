@@ -1,75 +1,64 @@
-
-
 <div class="center-comment" id="comment">
-  <div class="add-comment">
-    <input type="text" placeholder="Add to the discussion">
-    <button class="add-comment-summit" onclick="submitComment()">Summit</button>
-    <button class="add-comment-cannel">Cannel</button>
-  </div>
+      <div class="add-comment">
+            <form action="../comment/savecomment.php" method="POST" onsubmit="return submitComment()">
+                  <div class="add-comment">
+                        <input type="text" name="comment_text" placeholder="Add to the discussion" required>
+                        <input type="hidden" name="id_post"
+                              value="<?php echo isset($_GET['id']) ? $_GET['id'] : ''; ?>">
+                        <input type="hidden" name="id_user"
+                              value="<?php echo isset($_SESSION['id_user']) ? $_SESSION['id_user'] : ''; ?>">
+                        <button type="submit" class="add-comment-submit" onclick="submitComment()">Submit</button>
+                        <button type="button" class="add-comment-cancel">Cancel</button>
+                  </div>
+            </form>
+      </div>
 
-  <?php
-  include('../config/dbconfig.php');
-  // ID của bài post cần hiển thị comment
-  $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
+      <?php
+      include("../config/dbconfig.php");
+      // ID của bài post cần hiển thị comment
+      $id_bai_viet = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
 
-  // Truy vấn comment
-  $sql = "SELECT b.title, u.name AS user_name, c.comment_text, c.comment_date
+      // Truy vấn comment
+      $sql = "SELECT b.title, u.name AS user_name, c.comment_text, c.comment_date, u.avt
           FROM blog AS b
           LEFT JOIN comment AS c ON b.id_blog = c.id_post
           LEFT JOIN user AS u ON c.id_user = u.id_user
-          WHERE b.id_blog = $id_bai_viet";
+          WHERE b.id_blog = $id_bai_viet
+          ORDER BY c.comment_date DESC
+          ";
 
-  $result = $kn->query($sql);
 
-  // Hiển thị thông tin trong HTML
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      echo '<div class="comment">';
-      echo '  <div class="comment-avatar">';
-      // echo '    <img src="' . $row['avatar'] . '" alt="Not Found" />';
-      echo '  </div>';
-      echo '  <div class="comment-content">';
-      echo '    <div class="comment-author">' . $row['user_name'] . '</div>';
-      echo '    <div class="comment-date">' . date('d M', strtotime($row['comment_date'])) . '</div>';
-      echo '    <p>' . $row['comment_text'] . '</p>';
-      echo '  </div>';
-      echo '</div>';
-    }
-  } else {
-    echo "Không có comment nào.";
-  }
-  ?>
 
-  <script>
-    function submitComment() {
-      console.log("Submit button clicked!");
-      // Lấy dữ liệu từ input
-      var commentText = document.getElementById("commentText").value;
+      $result = $kn->query($sql);
 
-      // Kiểm tra xem comment có dữ liệu không
-      if (commentText.trim() === "") {
-        alert("Please enter a comment before submitting.");
-        return;
+      // Hiển thị thông tin trong HTML
+      
+      while ($row = $result->fetch_assoc()) {
+            echo '<div class="comment">';
+            echo '  <div class="comment-avatar">';
+            echo '    <img src="../' . $row['avt'] . '" alt="Not Found" />';
+            echo '  </div>';
+            echo '  <div class="comment-content">';
+            echo '    <div class="comment-author">' . $row['user_name'] . '</div>';
+            echo '    <div class="comment-date">' . date('d M', strtotime($row['comment_date'])) . '</div>';
+            echo '    <p>' . $row['comment_text'] . '</p>';
+            echo '  </div>';
+            echo '</div>';
       }
 
-      // Gửi dữ liệu lên server
-      var xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          // Xử lý kết quả từ server nếu cần
-          console.log(xhr.responseText);
-          // Refresh hoặc làm gì đó khi comment được lưu thành công
-        }
-      };
+      ?>
 
-      // Mã hóa dữ liệu để truyền lên server (có thể sử dụng JSON)
-      var data = "commentText=" + encodeURIComponent(commentText);
-
-      // Gửi request POST đến server
-      xhr.open("POST", "save_comment.php", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-      xhr.send(data);
-    }
-  </script>
+      <script>
+            function submitComment() {
+                  var commentText = document.querySelector('input[name="comment_text"]').value;
+                  // Kiểm tra nếu comment không rỗng
+                  if (commentText.trim() === "") {
+                        alert("Vui lòng nhập bình luận.");
+                        return false; // Ngăn form không được gửi
+                  }
+                  // Bạn có thể thêm các xác nhận khác ở đây nếu muốn
+                  return true; // Cho phép form được gửi
+            }
+      </script>
 
 </div>

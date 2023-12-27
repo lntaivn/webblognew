@@ -72,9 +72,9 @@ img {
   margin: 10px 0;
 }
 
-.add-comment input[type="text"]:focus {
+/* .add-comment input[type="text"]:focus {
   height: 50px; 
-}
+} */
 
 /* .add-comment button {
   display: none;
