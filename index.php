@@ -113,7 +113,7 @@ session_start();
                 <!-- post top -->
                 <div class="body-flexSecond__Post">
 
-                    <div class="body-flexSecond__Post-img"></div>
+                    <!-- <div class="body-flexSecond__Post-img"></div>
                     <div class="body-flexSecond__Post-by-user">
 
                         <div class="body-flexSecond__Post-user-avatar"></div>
@@ -128,26 +128,21 @@ session_start();
                             Posted on Oct 10
                         </div>
 
-                    </div>
-
-
-
-
-
-                    <!-- <div class="body-flexSecond__Post-by-user-content">
                     </div> -->
 
-                    <div class="body-flexSecond__TOP-Post">
+                    <!-- <div class="body-flexSecond__TOP-Post">
                         <div class="body-flexSecond__Top-name-tags">
                             <a href="#" class="body-flexSecond__Top-name-tags-one">#javascript</a>
                             <a href="#" class="body-flexSecond__Top-name-tags-two">#aws</a>
                             <a href="#" class="body-flexSecond__Top-name-tags-three">#serverless</a>
                             <a href="#" class="body-flexSecond__Top-name-tags-four">#tutorial</a>
                         </div>
-                    </div>
-
+                    </div> -->
+                <?php
+                include("topBlog.php");
+                ?>
                 </div>
-
+                
 
                 <?php
                 include("content/card.php");

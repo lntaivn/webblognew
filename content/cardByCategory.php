@@ -11,6 +11,7 @@ $sql = "SELECT b.id_blog, b.title, b.summary, b.date, b.banner, u.name, u.avt,
         LEFT JOIN Categories c ON btc.id_category = c.id_category
         LEFT JOIN User u ON b.id_user = u.id_user
         WHERE btc.id_category = ?
+        and b.status = 1
         GROUP BY b.id_blog;";
 
 $stmt = mysqli_prepare($kn, $sql);
@@ -18,7 +19,7 @@ mysqli_stmt_bind_param($stmt, 'i', $categoryId);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
-while ($row = mysqli_fetch_assoc($result)){
+while ($row = mysqli_fetch_assoc($result)) {
     // Extracting the data from each row
     @$blogId = $row["id_blog"];
     $title = $row["title"];
