@@ -1,5 +1,5 @@
 <?php
- session_start();
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -49,14 +49,13 @@
                     <a href="CreateBlog.php" class="header__login">
                         <p>Create Blog</p>
                     </a>
-                    <?php 
-                    if(isset($_SESSION["user"])){
-                        echo("<a href='logout.php' class='header__login'>
+                    <?php
+                    if (isset($_SESSION["user"])) {
+                        echo ("<a href='logout.php' class='header__login'>
                                 <p>Logout</p>
                             </a>");
-                    }
-                    else{
-                        echo("<a href='login.php' class='header__login'>
+                    } else {
+                        echo ("<a href='login.php' class='header__login'>
                                 <p>Login</p>
                             </a>
                             <a href='register.php' class='header__CreateAcc'>
@@ -64,7 +63,7 @@
                             </a>");
                     }
                     ?>
-                    
+
                 </div>
             </div>
         </header>
@@ -108,9 +107,11 @@
                         <div class="body-flexSecond__Post-user-avatar"></div>
 
                         <div class="body-flexSecond__Post-user-name">
-                            <span class="body-flexSecond__Post-user-name-abbreviations">Mamadou DICKO</span>
+                            <span class="body-flexSecond__Post-user-name-abbreviations">Mamadou
+                                DICKO</span>
                             for
-                            <span class="body-flexSecond__Post-user-name-fullname">Serverless By Theodo</span>
+                            <span class="body-flexSecond__Post-user-name-fullname">Serverless By
+                                Theodo</span>
                             <br />
                             Posted on Oct 10
                         </div>
@@ -118,37 +119,40 @@
                     </div>
 
 
-                            
-                 
-                   
+
+
+
                     <!-- <div class="body-flexSecond__Post-by-user-content">
 
         
 
                     </div> -->
 
-                        <div class="body-flexSecond__TOP-Post">
-                            <div class="body-flexSecond__Top-name-tags">
-                                <a href="#" class="body-flexSecond__Top-name-tags-one">#javascript</a>
-                                <a href="#" class="body-flexSecond__Top-name-tags-two">#aws</a>
-                                <a href="#" class="body-flexSecond__Top-name-tags-three">#serverless</a>
-                                <a href="#" class="body-flexSecond__Top-name-tags-four">#tutorial</a>
-                            </div>
+                    <div class="body-flexSecond__TOP-Post">
+                        <div class="body-flexSecond__Top-name-tags">
+                            <a href="#" class="body-flexSecond__Top-name-tags-one">#javascript</a>
+                            <a href="#" class="body-flexSecond__Top-name-tags-two">#aws</a>
+                            <a href="#" class="body-flexSecond__Top-name-tags-three">#serverless</a>
+                            <a href="#" class="body-flexSecond__Top-name-tags-four">#tutorial</a>
                         </div>
+                    </div>
 
                 </div>
 
 
                 <?php
-                    include("content/card.php");
-                    ?>
+                include("content/card.php");
+                ?>
 
             </div>
 
             <!-- <div class="body-flex__third">
                      <h1>hung</h1>
             </div> -->
-            <div class="body-flexFist__ row row3">
+            <?php
+            include('content/rightContent.php');
+            ?>
+            <!-- <div class="body-flexFist__ row row3">
                 <div class="body-flexFist__login">
                     <div class="body-flexFist__login-content">
                         <h1>DEV Community is a</h1>
@@ -166,7 +170,7 @@
                         <a href="#" class="flexFist__login-button-login">login</a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </body>
