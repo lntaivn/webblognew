@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_start();
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +17,7 @@ session_start();
     <link rel="stylesheet" href="./css/bodyFlex.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -39,7 +39,9 @@ session_start();
             <div class="header-with-search">
                 <div class="header__logo">
                     <div class="header__logo-img">
+                    <a href="./index.php" style="text-decoration: none; color: #333; font-weight: bold;">
                         <img src="img/Asset 2.png" alt="" class="header__logo-img--maxwithimg" />
+                    </a>
                     </div>
                     <div class="header__search-input-wrap">
                         <input type="text" class="header__seach-input" placeholder="Search..." />
@@ -68,7 +70,6 @@ session_start();
                             </a>");
                     }
                     ?>
-
                 </div>
             </div>
         </header>

@@ -8,6 +8,7 @@ body, html {
 }
 
 .page-wrapper {
+
   display: flex;
   align-items: flex-start;
   max-width: 1400px;

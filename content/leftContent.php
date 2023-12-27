@@ -71,7 +71,7 @@
 <script src="path/to/your/script.js"></script>
 <div class="sidebar">
     <div class="sidebar-header">
-        <h2>Các thể loại</h2>
+        <h2>Tags</h2>
     </div>
     <ul class="category-list">
         <?php

@@ -1,13 +1,14 @@
+
 <?php
 session_start();
 ?>
 <?php
 include("../config/dbconfig.php");
-if (isset($_SESSION["user"])) {
-    $userId = $_SESSION["user"];
+if (isset($_GET['id_user'])) {
+    $userId = $_GET['id_user'];
 
     // Đặt dấu nháy đơn xung quanh giá trị email
-    $query = "SELECT * FROM user WHERE email = '$userId'";
+    $query = "SELECT * FROM user WHERE id_user = '$userId'";
     $result = mysqli_query($kn, $query);
 
     if ($result) {
@@ -19,12 +20,10 @@ if (isset($_SESSION["user"])) {
     } else {
         echo "Không thể lấy thông tin người dùng: " . mysqli_error($kn);
     }
-} else {
-    // Redirect hoặc hiển thị thông báo nếu người dùng chưa đăng nhập
-    header("Location: login.php");
-    exit();
 }
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,27 +34,7 @@ if (isset($_SESSION["user"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css.css">
     <link rel="stylesheet" href="../css/header.css">
-    <style>
-        .modify_card_list_port {
-            display: flex;
-            gap: 5px;
-            justify-content: space-between;
-            align-items: center;
-            button {
-                border: none !important;;
-            }
-            
-        }
-        .delete{
-            width: 20px;
-            font-size: 1.2em;
-
-        }
-        .delete:hover {
-            background-color: blueviolet;
-        }
-
-    </style>
+    <link rel="stylesheet" href="../css/base.css">
 </head>
 
 <body>
@@ -65,7 +44,6 @@ if (isset($_SESSION["user"])) {
                 <div class="header__logo">
                     <div class="header__logo-img">
                     <a href="../index.php" style="text-decoration: none; color: #333; font-weight: bold;"><img src="../img/Asset 2.png" alt="" class="header__logo-img--maxwithimg" /></a>
-
                     </div>
                     <div class="header__search-input-wrap">
                         <input type="text" class="header__seach-input" placeholder="Search..." />
@@ -102,7 +80,7 @@ if (isset($_SESSION["user"])) {
         </div>
         <div class="profile">
             <header class="profile__header">
-                <a href="edit_profil.php" class="profile__edit-button">Edit profile</a>
+               
                 <img src="<?php echo $avt; ?>" alt="Profile" class="profile__picture">
                 <h1 class="profile__name">
                     <?php echo $userName; ?>
@@ -114,7 +92,6 @@ if (isset($_SESSION["user"])) {
             </header>
  <!-- đây là phần làm -->
 
- 
             <div class="profile__body">
                 <div class="profile__stats">
                 <?php
@@ -123,7 +100,7 @@ include("../config/dbconfig.php");
 
 if (isset($_SESSION["user"])) {
     $email = $_SESSION["user"];
-    $queryUser = "SELECT id_user, name, avt FROM user WHERE email = '$email'";
+    $queryUser = "SELECT id_user, name, avt FROM user WHERE id_user = '$userId'";
     $resultUser = mysqli_query($kn, $queryUser);
 
     if ($resultUser) {
@@ -146,11 +123,11 @@ if (isset($_SESSION["user"])) {
         $blogCount = $blogCountRow['blog_count'];
 
         // HTML for displaying user profile stats
-        
+
         echo "<div class='stats__item'><i class='fas fa-newspaper stats__icon'></i> $blogCount post(s) published</div>";
         echo "<div class='stats__item'><i class='fas fa-comments stats__icon'></i> $commentCount comment(s) written</div>";
         echo "<div class='stats__item'><i class='fas fa-tags stats__icon'></i> $voteCount vote(s) made</div>";
-   
+
     } else {
         echo "Error fetching user data: " . mysqli_error($kn);
     }
@@ -159,15 +136,17 @@ if (isset($_SESSION["user"])) {
     exit();
 }
 ?>
-</div>
+<!-- Continue with your HTML layout -->
+
+                </div>
                 
          <!-- #region-->
                 <div class="post-preview-grid">
-                    <?php if (isset($_SESSION["user"])) {
-                        $email = $_SESSION["user"];
+                    <?php 
+      
 
                         // Find id_user based on email
-                        $queryUser = "SELECT id_user, name, avt FROM user WHERE email = '$email'";
+                        $queryUser = "SELECT id_user, name, avt FROM user WHERE id_user = '$userId'";
                         $resultUser = mysqli_query($kn, $queryUser);
 
                         if ($resultUser) {
@@ -198,7 +177,7 @@ if (isset($_SESSION["user"])) {
 
                                         echo '<div>';
                                         echo '<div class="post-preview__meta">';
-                                        echo '<div class="modify_card_list_port"><h2 class="post-preview__author">' . $userName . '</h2><button onclick="deleteBlog(' . $id_blog . ')"><i class="fa-regular fa-delete-left delete"></i></button></div>';
+                                        echo '<h2 class="post-preview__author">' . $userName . '</h2>';
                                         echo '<time class="post-preview__date">' . date('M d', strtotime($date)) . '</time>';
                                         echo '</div>';
                                         echo '</div>';
@@ -207,7 +186,7 @@ if (isset($_SESSION["user"])) {
                                         echo '<h3 class="post-preview__title"><a href="../content/blog.php?id=' . $id_blog . '">' . $title . '<a/></h3>';
                                         echo '<div class="post-preview__footer">';
                                         echo '<a href="../content/blog.php?id='.$id_blog.'#comment'.'" style="text-decoration: none; color: #333; font-weight: bold;"><button class="post-preview__comment-btn"><i class="fa-regular fa-comment"></i>Add
-                                        Comment</button></a>';
+                                Comment</button></a>';
                                         echo '<span class="post-preview__read-time"></span>';
                                         echo '</div>';
                                         echo '</div>';
@@ -222,33 +201,11 @@ if (isset($_SESSION["user"])) {
                         } else {
                             echo "Error fetching user data: " . mysqli_error($kn);
                         }
-                    } else {
-                        echo "User not logged in.";
-                    } ?>
+                     ?>
                 </div>
             </div>
         </div>
     </div>
 </body>
-</html>
-<script>
-    function deleteBlog(id) {
-    if (confirm('Are you sure you want to delete this blog?')) {
-        var formData = new FormData();
-        formData.append('id_blog', id);
 
-        fetch('./deleteBlog.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => {
-            console.log(response);
-            alert("Success!");
-            location.reload(); 
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-}
-</script>
+</html>

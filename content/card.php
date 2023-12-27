@@ -39,11 +39,12 @@ while ($row = mysqli_fetch_array($kq)) {
     $banner = $row["banner"];
     $name = $row["name"];
     $avt = $row["avt"];
+    $avt = str_replace('../', './', $avt);
 
 
 
     // Generating the HTML content
-    echo '<div class="card" style="width: 100%; height: 192px; min-height:192px">';
+    echo '<div class="card" style="width: 90%; height: 192px; min-height:192px">';
     echo '    <div class="card-header">';
     echo '        <img src="' . htmlspecialchars($avt) . '" alt="Profile" class="profile-img">';
     echo '        <span class="date" style="font-weight: 700">' . htmlspecialchars($name) . '</span>';
@@ -58,10 +59,14 @@ while ($row = mysqli_fetch_array($kq)) {
     echo '    </div>';
     echo '    <div class="card-footer">';
     echo '        <button class="reaction-button">' . htmlspecialchars($reactions) . '&nbsp<i class="fa fa-star" style="color: gold;"></i> </button>';
-    echo '        <button class="comments-button">💬 ' . htmlspecialchars($comments) . ' comments</button>';
+    echo '<a href="content/blog.php?id=' . htmlspecialchars($blogId) . '#comment" style="text-decoration: none; color: #333; font-weight: bold;">';
+    echo '<button class="comments-button">💬 ' . htmlspecialchars($comments) . ' comments</button></a>';
     echo '        <span class="read-time">' . htmlspecialchars($readTime) . '</span>';
-
     echo '        </div>';
     echo '</div>';
 }
 ?>
+
+
+ 
+                          
