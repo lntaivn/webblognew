@@ -20,7 +20,10 @@ if (isset($_SESSION["user"])) {
         echo "Không thể lấy thông tin người dùng: " . mysqli_error($kn);
     }
 } else {
-    // Redirect hoặc hiển thị thông báo nếu người dùng chưa đăng nhập
+    echo "<script language=javascript>
+            alert('Vui lòng đăng nhập!');
+            window.location='login.html';
+            </script>";
     header("Location: login.php");
     exit();
 }
@@ -63,10 +66,12 @@ if (isset($_SESSION["user"])) {
         <header class="header">
             <div class="header-with-search">
                 <div class="header__logo">
-                    <div class="header__logo-img">
-                    <a href="../index.php" style="text-decoration: none; color: #333; font-weight: bold;"><img src="../img/Asset 2.png" alt="" class="header__logo-img--maxwithimg" /></a>
+                    <a href="../index.php">
+                        <div class="header__logo-img">
+                        <a href="../index.php" style="text-decoration: none; color: #333; font-weight: bold;"><img src="../img/Asset 2.png" alt="" class="header__logo-img--maxwithimg" /></a>
 
-                    </div>
+                        </div>
+                    </a>
                     <div class="header__search-input-wrap">
                         <input type="text" class="header__seach-input" placeholder="Search..." />
                         <button type="submit" class="btn-icon__search">
@@ -103,7 +108,7 @@ if (isset($_SESSION["user"])) {
         <div class="profile">
             <header class="profile__header">
                 <a href="edit_profil.php" class="profile__edit-button">Edit profile</a>
-                <img src="<?php echo $avt; ?>" alt="Profile" class="profile__picture">
+                <img src="../<?php echo $avt; ?>" alt="Profile" class="profile__picture">
                 <h1 class="profile__name">
                     <?php echo $userName; ?>
                 </h1>
@@ -112,56 +117,42 @@ if (isset($_SESSION["user"])) {
                 </p>
                 <p class="profile__joined"><i class="fa-solid fa-cake-candles"></i>Joined on Dec 14, 2023</p>
             </header>
- <!-- đây là phần làm -->
+            <!-- đây là phần làm -->
+            <?php
+            $email = $_SESSION["user"];
 
- 
+            $query1 = "SELECT
+                (SELECT COUNT(*) FROM blog b WHERE b.id_user = u.id_user) AS total_blogs,
+                (SELECT COUNT(*) FROM comment c WHERE c.id_user = u.id_user) AS total_comments
+              FROM user u
+              WHERE u.email = '$email'";
+
+            $result = mysqli_query($kn, $query1);
+
+            if ($result) {
+                $data = mysqli_fetch_assoc($result);
+                $totalBlogs = $data["total_blogs"];
+                $totalComments = $data["total_comments"];
+            } else {
+                echo "Không thể lấy thông tin người dùng: " . mysqli_error($kn);
+            }
+            ?>
             <div class="profile__body">
                 <div class="profile__stats">
-                <?php
+                    <div class="stats__item">
+                        <i class="fas fa-newspaper stats__icon"></i>
+                        <?php echo ($totalBlogs) ?> post published
+                    </div>
+                    <div class="stats__item">
+                        <i class="fas fa-comments stats__icon"></i>
+                        <?php echo ($totalComments) ?> comments written
+                    </div>
+                    <div class="stats__item">
+                        <i class="fas fa-tags stats__icon"></i> 0 tags followed
+                    </div>
+                </div>
 
-include("../config/dbconfig.php");
-
-if (isset($_SESSION["user"])) {
-    $email = $_SESSION["user"];
-    $queryUser = "SELECT id_user, name, avt FROM user WHERE email = '$email'";
-    $resultUser = mysqli_query($kn, $queryUser);
-
-    if ($resultUser) {
-        $rowUser = mysqli_fetch_assoc($resultUser);
-        $id_user = $rowUser['id_user'];
-
-        $commentCountQuery = "SELECT COUNT(*) AS comment_count FROM comment WHERE id_user = $id_user";
-        $commentCountResult = mysqli_query($kn, $commentCountQuery);
-        $commentCountRow = mysqli_fetch_assoc($commentCountResult);
-        $commentCount = $commentCountRow['comment_count'];
-
-        $voteCountQuery = "SELECT SUM(count_vote) AS vote_count FROM vote WHERE id_user = $id_user";
-        $voteCountResult = mysqli_query($kn, $voteCountQuery);
-        $voteCountRow = mysqli_fetch_assoc($voteCountResult);
-        $voteCount = $voteCountRow['vote_count'];
-
-        $blogCountQuery = "SELECT COUNT(*) AS blog_count FROM blog WHERE id_user = $id_user AND status = 1";
-        $blogCountResult = mysqli_query($kn, $blogCountQuery);
-        $blogCountRow = mysqli_fetch_assoc($blogCountResult);
-        $blogCount = $blogCountRow['blog_count'];
-
-        // HTML for displaying user profile stats
-        
-        echo "<div class='stats__item'><i class='fas fa-newspaper stats__icon'></i> $blogCount post(s) published</div>";
-        echo "<div class='stats__item'><i class='fas fa-comments stats__icon'></i> $commentCount comment(s) written</div>";
-        echo "<div class='stats__item'><i class='fas fa-tags stats__icon'></i> $voteCount vote(s) made</div>";
-   
-    } else {
-        echo "Error fetching user data: " . mysqli_error($kn);
-    }
-} else {
-    header("Location: login.php");
-    exit();
-}
-?>
-</div>
-                
-         <!-- #region-->
+                <!-- #region-->
                 <div class="post-preview-grid">
                     <?php if (isset($_SESSION["user"])) {
                         $email = $_SESSION["user"];
@@ -193,7 +184,7 @@ if (isset($_SESSION["user"])) {
 
                                         // Output the HTML for each blog post
                                         echo '<div class="post-preview">';
-                                        echo '<img src="' . $avt . '" alt="Avatar" class="post-preview__avatar">';
+                                        echo '<img src="../' . $avt . '" alt="Avatar" class="post-preview__avatar">';
                                         echo '<div class="post-preview__header">';
 
                                         echo '<div>';

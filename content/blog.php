@@ -256,42 +256,39 @@ $comment = $row["number_of_comments"];
                                     // Tạo một đối tượng Parsedown mới
                                     $parsedown = new Parsedown();
 
-                                    // Chuyển đổi Markdown sang HTML
-                                    $htmlContent = $parsedown->text($row['content']);
-                                    // Display the blog content dynamically
-                                    echo '<img src="../' . $row["banner"] . '" alt="Banner Image" class="wizard-image">';
-                                    if (isset($_SESSION["user"]) && $_SESSION["user"] == $email) {
-                                          // Hiển thị nút chỉnh sửa
-                                          echo '<div class="edit_bloger"><a href="../edit_blog.php?id=' . $id . '" class="edit-button">Edit</a></div>';
-                                    }
-                                    echo '<div class="article-info">';
-                                    echo '<div class="blog-ranking">';
-                                    echo '</div>';
-                                    echo '<div class="author-info">';
-                                    echo '<img src="' . $row["hungave"] . '" alt="User Avatar" class="user-list-img">';
-                                    echo '<div class="author-details">';
-                                    echo '<span class="author-name">' . htmlspecialchars($row['author_name']) . '</span>';
-                                    echo '<span class="post-date">Posted on ' . htmlspecialchars($row['date']) . '</span>';
-                                    echo '</div></div>';
-                                    echo '<h1 class="article-title">' . htmlspecialchars($row['title']) . '</h1>';
-                                    echo '<p class="article-summary">' . htmlspecialchars($row['summary']) . '</p>';
-
-                                    echo '<div class="article-content">' . $htmlContent . '</div>';
-                                    echo '<div class="tags">';
-                                    $tags = getBlogTags($id);
-                                    echo '<div class="tags_list">';
-                                    foreach ($tags as $tag) {
-                                          $tagId = str_replace(' ', '-', $tag);
-                                          echo '<span class="tag" id="tag-' . htmlspecialchars($tagId) . '">' . htmlspecialchars($tag) . '</span>';
-                                    }
-                                    echo '</div>';
-                                    echo '</div>';
-                                    
-                                    echo '</div>';
-                              } else {
-                                    echo 'Blog post not found.';
-                              }
+                        // Chuyển đổi Markdown sang HTML
+                        $htmlContent = $parsedown->text($row['content']);
+                        // Display the blog content dynamically
+                        echo '<img src="../' . $row["banner"] . '" alt="Banner Image" class="wizard-image">';
+                        if (isset($_SESSION["user"]) && $_SESSION["user"] == $email) {
+                              // Hiển thị nút chỉnh sửa
+                              echo '<div class="edit_bloger"><a href="../edit_blog.php?id=' . $id . '" class="edit-button">Edit</a></div>';
                         }
+                        echo '<div class="article-info">';
+                        echo '<div class="blog-ranking">';
+                        echo '</div>';
+                        echo '<div class="author-info">';
+                        echo '<img src="./../img/logo.png" alt="' . htmlspecialchars($row['author_name']) . '" class="author-image">';
+                        echo '<div class="author-details">';
+                        echo '<span class="author-name">' . htmlspecialchars($row['author_name']) . '</span>';
+                        echo '<span class="post-date">Posted on ' . htmlspecialchars($row['date']) . '</span>';
+                        echo '</div></div>';
+                        echo '<h1 class="article-title">' . htmlspecialchars($row['title']) . '</h1>';
+                        echo '<p class="article-summary">' . htmlspecialchars($row['summary']) . '</p>';
+                        echo '<div class="article-content">' . $htmlContent . '</div>';
+                        echo '<div class="tags">';
+                        $tags = getBlogTags($id);
+                        echo '<div class="tags_list">';
+                        foreach ($tags as $tag) {
+                              $tagId = str_replace(' ', '-', $tag); 
+                              echo '<span class="tag" id="tag-' . htmlspecialchars($tagId) . '">' . htmlspecialchars($tag) . '</span>';
+                        }
+                        echo '</div>';
+                        echo '</div></div>';
+                    } else {
+                        echo 'Blog post not found.';
+                    }
+                }
 
                         if ($id_bai_viet) {
                               showBlog($id_bai_viet, $email);
@@ -408,27 +405,27 @@ $comment = $row["number_of_comments"];
                               },
                               body: `id_post=${id_post}&count_vote=${count_vote}`
                         })
-                              .then(response => {
-                                    if (!response.ok) {
-                                          throw new Error('Network response was not ok ' +
-                                                response.statusText);
-                                    }
-                                    return response
-                                          .text(); // Sử dụng text() nếu bạn nghi ngờ kết quả không phải JSON
-                              })
-                              .then(text => {
-                                    try {
-                                          const data = JSON.parse(
-                                                text); // Cố gắng parse text thành JSON
-                                          alert("Bạn đã chọn " + count_vote + " sao.");
-                                    } catch (error) {
-                                          console.error('Error parsing JSON:', text);
-                                          throw new Error('Error parsing JSON: ' + error);
-                                    }
-                              })
-                              .catch(error => {
-                                    console.error('Error:', error);
-                              });
+                        .then(response => {
+                              if (!response.ok) {
+                                    throw new Error('Network response was not ok ' +
+                                          response.statusText);
+                              }
+                              return response
+                                    .text(); // Sử dụng text() nếu bạn nghi ngờ kết quả không phải JSON
+                        })
+                        .then(text => {
+                              try {
+                                    const data = JSON.parse(
+                                          text); // Cố gắng parse text thành JSON
+                                    alert("Bạn đã chọn " + count_vote + " sao.");
+                              } catch (error) {
+                                    console.error('Error parsing JSON:', text);
+                                    throw new Error('Error parsing JSON: ' + error);
+                              }
+                        })
+                        .catch(error => {
+                              console.error('Error:', error);
+                        });
 
                   });
             });

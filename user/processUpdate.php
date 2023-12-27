@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION["user"])) {
 
             $imagePath = '';
             if (isset($_FILES['profile-image']) && $_FILES['profile-image']['error'] == UPLOAD_ERR_OK) {
-                $targetDir = "../upload_Img_User/";
+                $targetDir = "upload_Img_User/";
                 if (!file_exists($targetDir)) {
                     mkdir($targetDir, 0777, true);
                 }
