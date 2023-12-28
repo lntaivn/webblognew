@@ -245,7 +245,7 @@ $comment = $row["number_of_comments"];
                         {
                               global $kn;
 
-                              $sql = "SELECT blog.*, user.name AS author_name, user.id_user As hung, user.avt as hungave ,  blog.banner FROM blog JOIN user ON blog.id_user = user.id_user WHERE id_blog = ?";
+                              $sql = "SELECT blog.*, user.name AS author_name, user.id_user As hung, user.avt ,  blog.banner FROM blog JOIN user ON blog.id_user = user.id_user WHERE id_blog = ?";
                               
                               $stmt = mysqli_prepare($kn, $sql);
                               mysqli_stmt_bind_param($stmt, "i", $id);
@@ -268,7 +268,7 @@ $comment = $row["number_of_comments"];
                         echo '<div class="blog-ranking">';
                         echo '</div>';
                         echo '<div class="author-info">';
-                        echo '<img src="'.htmlspecialchars($row['hungave']).'" alt="' . htmlspecialchars($row['author_name']) . '" class="author-image">';
+                        echo '<img src="../user/'.htmlspecialchars($row['avt']).'" alt="' . htmlspecialchars($row['author_name']) . '" class="author-image">';
                         echo '<div class="author-details">';
                         echo '<span class="author-name">' . htmlspecialchars($row['author_name']) . '</span>';
                         echo '<span class="post-date">Posted on ' . htmlspecialchars($row['date']) . '</span>';
@@ -320,7 +320,7 @@ $comment = $row["number_of_comments"];
                   <aside class="user-profile">
                         <!-- <img src="./img/<?php //echo htmlspecialchars($row['profile_picture']); ?>" alt="Profile Picture" -->
 
-                        <img src="<?php echo htmlspecialchars($row['avt']); ?>" alt="Profile Picture" class="profile-picture">
+                        <img src="../user/<?php echo htmlspecialchars($row['avt']); ?>" alt="Profile Picture" class="profile-picture">
                         <?php
                         if (isset($_SESSION["user"]) && $_SESSION["user"] == $email) {
                               ?>
@@ -418,6 +418,7 @@ $comment = $row["number_of_comments"];
                                     const data = JSON.parse(
                                           text); // Cố gắng parse text thành JSON
                                     alert("Bạn đã chọn " + count_vote + " sao.");
+                                    location.reload();
                               } catch (error) {
                                     console.error('Error parsing JSON:', text);
                                     throw new Error('Error parsing JSON: ' + error);

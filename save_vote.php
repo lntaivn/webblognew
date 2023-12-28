@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user'])) {
 
                 if ($existing_vote) {
                     // Cập nhật bản ghi hiện có
-                    $updateQuery = "UPDATE vote SET count_vote = ? WHERE id_vote = ?";
+                    $updateQuery = "UPDATE vote SET count_vote = ?, date = CURRENT_TIMESTAMP WHERE id_vote = ?";
                     if ($updateStmt = mysqli_prepare($kn, $updateQuery)) {
                         mysqli_stmt_bind_param($updateStmt, "ii", $count_vote, $existing_vote['id_vote']);
                         mysqli_stmt_execute($updateStmt);

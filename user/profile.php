@@ -81,7 +81,7 @@ if (isset($_GET['id_user'])) {
         <div class="profile">
             <header class="profile__header">
                
-                <img src="<?php echo $avt; ?>" alt="Profile" class="profile__picture">
+                <img src="../<?php echo $avt; ?>" alt="Profile" class="profile__picture">
                 <h1 class="profile__name">
                     <?php echo $userName; ?>
                 </h1>
@@ -172,7 +172,7 @@ if (isset($_SESSION["user"])) {
 
                                         // Output the HTML for each blog post
                                         echo '<div class="post-preview">';
-                                        echo '<img src="' . $avt . '" alt="Avatar" class="post-preview__avatar">';
+                                        echo '<img src="../' . $avt . '" alt="Avatar" class="post-preview__avatar">';
                                         echo '<div class="post-preview__header">';
 
                                         echo '<div>';
